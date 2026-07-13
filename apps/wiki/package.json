@@ -1,0 +1,21 @@
+{
+	"name": "wiki",
+	"private": true,
+	"scripts": {
+		"start": "docusaurus start",
+		"build": "docusaurus build",
+		"serve": "docusaurus serve"
+	},
+	"dependencies": {
+		"@docusaurus/core": "^3.10.0",
+		"@docusaurus/preset-classic": "^3.10.0",
+		"docusaurus-plugin-pagefind": "workspace:*",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"devDependencies": {
+		"@docusaurus/tsconfig": "^3.10.0",
+		"pagefind": "^1.5.0",
+		"typescript": "^5.0.0"
+	}
+}

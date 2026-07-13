@@ -1,0 +1,13 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist/theme",
+		"rootDir": "./src/theme",
+		"noEmit": false,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"types": ["@docusaurus/module-type-aliases"]
+	},
+	"include": ["src/theme/**/*"],
+	"exclude": ["src/theme/**/*.spec.ts"]
+}

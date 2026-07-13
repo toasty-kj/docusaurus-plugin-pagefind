@@ -1,0 +1,28 @@
+{
+	"name": "docusaurus-plugin-pagefind-repo",
+	"private": true,
+	"scripts": {
+		"build": "pnpm --filter docusaurus-plugin-pagefind build",
+		"test": "pnpm --filter docusaurus-plugin-pagefind test",
+		"build:wiki": "pnpm --filter wiki build",
+		"dev:wiki": "pnpm build && pnpm build:wiki && pnpm --filter wiki serve",
+		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
+		"prepare": "husky"
+	},
+	"engines": {
+		"node": "22.x"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.3",
+		"@changesets/cli": "^2.27.0",
+		"@docusaurus/tsconfig": "^3.10.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.8",
+		"playwright": "^1.61.1",
+		"typescript": "^5.0.0"
+	},
+	"lint-staged": {
+		"*.ts": "biome check --write"
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"name": "docusaurus-plugin-pagefind",
+	"version": "0.1.0",
+	"description": "Pagefind search plugin for Docusaurus with DocSearch UI",
+	"license": "MIT",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist",
+		"src/theme"
+	],
+	"scripts": {
+		"build": "tsc -p tsconfig.json && tsc -p tsconfig.theme.json && cp src/theme/SearchBar/styles.css dist/theme/SearchBar/styles.css",
+		"test": "vitest run",
+		"test:watch": "vitest"
+	},
+	"dependencies": {
+		"@docsearch/css": "^3.0.0",
+		"@docsearch/react": "^3.0.0",
+		"@iconify/react": "^4.0.0",
+		"fast-glob": "^3.3.0"
+	},
+	"peerDependencies": {
+		"@docusaurus/core": ">=3.0.0",
+		"pagefind": ">=1.1.0",
+		"react": ">=18.0.0",
+		"react-dom": ">=18.0.0"
+	},
+	"devDependencies": {
+		"@docusaurus/module-type-aliases": "^3.10.0",
+		"@docusaurus/types": "^3.10.0",
+		"@docusaurus/tsconfig": "^3.10.0",
+		"@types/node": "^22.0.0",
+		"typescript": "^5.0.0",
+		"vitest": "^2.0.0"
+	}
+}
