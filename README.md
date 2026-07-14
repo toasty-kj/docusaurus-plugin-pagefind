@@ -10,7 +10,7 @@ offline-capable full-text search solution, using the DocSearch UI shell.
 
 🔗 [Live Demo](https://toasty-kj.github.io/docusaurus-plugin-pagefind/)
 
-<!-- TODO(cozytakaki): replace with a real GIF of the search modal in action -->
+<!-- TODO(toasty-kj): replace with a real GIF of the search modal in action -->
 ![demo placeholder](./docs/demo-placeholder.png)
 
 ## Features
@@ -66,10 +66,6 @@ export default {
 ```bash
 pnpm docusaurus swizzle docusaurus-plugin-pagefind SearchBar
 ```
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Community
 
