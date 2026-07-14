@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/toasty-kj/docusaurus-plugin-pagefind/discussions
+    about: Please ask general questions and share ideas in Discussions instead of opening an issue.
