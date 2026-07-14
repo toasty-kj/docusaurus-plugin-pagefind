@@ -32,27 +32,17 @@ interface AlgoliaSearchResponse {
 
 let pagefindPromise: Promise<PagefindModule | null> | null = null;
 
-/**
- * Hides the dynamic import inside `Function` so webpack never statically
- * analyzes or bundles it — the same technique runPagefind.ts uses for the
- * Node-side `import('pagefind')`. The specifier is a fully dynamic,
- * baseUrl-aware URL resolved only at runtime in the browser.
- */
-const importPagefindModule = new Function(
-	'specifier',
-	'return import(specifier)',
-) as (specifier: string) => Promise<PagefindModule>;
-
-function defaultLoader(pagefindJsUrl: string): Promise<PagefindModule> {
-	return importPagefindModule(pagefindJsUrl);
+function defaultLoader(): Promise<PagefindModule> {
+	return import(
+		// @ts-expect-error: /pagefind/pagefind.js is a runtime-only path served by Docusaurus build output
+		/* webpackIgnore: true */ '/pagefind/pagefind.js'
+	) as Promise<PagefindModule>;
 }
 
-async function loadPagefind(
-	pagefindJsUrl: string,
-): Promise<PagefindModule | null> {
+async function loadPagefind(): Promise<PagefindModule | null> {
 	if (pagefindPromise) return pagefindPromise;
 	const loader = (globalThis as any).__pagefindLoader ?? defaultLoader;
-	pagefindPromise = loader(pagefindJsUrl).catch(() => null);
+	pagefindPromise = loader().catch(() => null);
 	return pagefindPromise;
 }
 
@@ -77,25 +67,14 @@ function buildResponseItem(
 	};
 }
 
-/**
- * Joins a Docusaurus `baseUrl` and the resolved pagefind subdirectory into
- * the runtime URL for `pagefind.js`, collapsing any doubled slashes.
- */
-export function buildPagefindJsUrl(
-	baseUrl: string,
-	pagefindDir: string,
-): string {
-	return `${baseUrl}/${pagefindDir}/pagefind.js`.replace(/\/{2,}/g, '/');
-}
-
-export function createPagefindSearch(pagefindJsUrl: string) {
+export function createPagefindSearch() {
 	return async function search(
 		req: AlgoliaSearchRequest,
 	): Promise<AlgoliaSearchResponse> {
 		const first = req.requests[0];
 		const query = first?.query ?? '';
 		const indexName = first?.indexName ?? 'pagefind';
-		const pf = await loadPagefind(pagefindJsUrl);
+		const pf = await loadPagefind();
 		if (!pf || !query) {
 			return { results: [buildResponseItem(query, indexName)] };
 		}
