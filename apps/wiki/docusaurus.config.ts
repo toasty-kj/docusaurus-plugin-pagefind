@@ -4,7 +4,7 @@ const config: Config = {
 	title: 'docusaurus-plugin-pagefind',
 	tagline: 'Fast offline search for Docusaurus powered by Pagefind',
 	url: 'https://toasty-kj.github.io',
-	baseUrl: '/',
+	baseUrl: '/docusaurus-plugin-pagefind/',
 	onBrokenLinks: 'throw',
 	markdown: { hooks: { onBrokenMarkdownLinks: 'warn' } },
 	i18n: { defaultLocale: 'en', locales: ['en'] },
