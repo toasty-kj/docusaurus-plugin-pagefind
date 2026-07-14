@@ -28,6 +28,7 @@
 	],
 	"scripts": {
 		"build": "tsc -p tsconfig.json && tsc -p tsconfig.theme.json && cp src/theme/SearchBar/styles.css dist/theme/SearchBar/styles.css",
+		"prepublishOnly": "cp ../../README.md ./README.md && cp ../../LICENSE ./LICENSE",
 		"test": "vitest run",
 		"test:watch": "vitest"
 	},
