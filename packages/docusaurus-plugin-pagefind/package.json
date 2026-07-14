@@ -34,7 +34,7 @@
 	"dependencies": {
 		"@docsearch/css": "^3.0.0",
 		"@docsearch/react": "^3.0.0",
-		"@iconify/react": "^4.0.0",
+		"@iconify/react": "^6.0.2",
 		"fast-glob": "^3.3.0"
 	},
 	"peerDependencies": {
