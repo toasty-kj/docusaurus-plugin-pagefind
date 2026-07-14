@@ -2,7 +2,24 @@
 	"name": "docusaurus-plugin-pagefind",
 	"version": "0.1.0",
 	"description": "Pagefind search plugin for Docusaurus with DocSearch UI",
+	"keywords": [
+		"docusaurus",
+		"docusaurus-plugin",
+		"pagefind",
+		"search",
+		"static-site"
+	],
 	"license": "MIT",
+	"author": "toasty-kj",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/toasty-kj/docusaurus-plugin-pagefind.git",
+		"directory": "packages/docusaurus-plugin-pagefind"
+	},
+	"homepage": "https://github.com/toasty-kj/docusaurus-plugin-pagefind#readme",
+	"bugs": {
+		"url": "https://github.com/toasty-kj/docusaurus-plugin-pagefind/issues"
+	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -11,6 +28,7 @@
 	],
 	"scripts": {
 		"build": "tsc -p tsconfig.json && tsc -p tsconfig.theme.json && cp src/theme/SearchBar/styles.css dist/theme/SearchBar/styles.css",
+		"prepublishOnly": "cp ../../README.md ./README.md && cp ../../LICENSE ./LICENSE",
 		"test": "vitest run",
 		"test:watch": "vitest"
 	},
@@ -32,6 +50,6 @@
 		"@docusaurus/tsconfig": "^3.10.0",
 		"@types/node": "^22.0.0",
 		"typescript": "^5.0.0",
-		"vitest": "^2.0.0"
+		"vitest": "^3.2.6"
 	}
 }

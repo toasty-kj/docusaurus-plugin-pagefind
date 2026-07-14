@@ -4,6 +4,30 @@
  * Colors follow Docusaurus light/dark theme.
  */
 
+:root {
+	--docsearch-primary-color: var(--ifm-color-primary);
+	--docsearch-text-color: var(--ifm-font-color-base);
+}
+
+/* ===== Navbar button ===== */
+/* @docsearch/css bakes in a 16px left margin meant for standalone search
+   pages; Docusaurus's navbarSearchContainer already provides consistent
+   item spacing, so the extra margin needs to be removed to keep the
+   button aligned like any other navbar item. */
+.DocSearch-Button {
+	margin: 0 !important;
+	transition: all var(--ifm-transition-fast)
+		var(--ifm-transition-timing-default) !important;
+}
+
+.DocSearch-Button-Key {
+	padding: 0 !important;
+}
+
+.DocSearch-Container {
+	z-index: calc(var(--ifm-z-index-fixed) + 1) !important;
+}
+
 [data-theme="light"] {
 	--pagefind-backdrop: rgba(0, 0, 0, 0.45);
 	--pagefind-modal-bg: #ffffff;
@@ -205,10 +229,26 @@
 	min-height: 0 !important;
 }
 
-.DocSearch-Dropdown:not(
+/* With no dropdown content, the divider between input and results serves
+   no purpose and its reserved space throws off vertical centering of the
+   search input row, so drop it and balance the padding above/below.
+   Scoped once on the Modal (rather than repeating the :has() check per
+   descendant) so the browser only evaluates it once per reflow. */
+.DocSearch-Modal:not(
 	:has(.DocSearch-Hit, .DocSearch-NoResults, .DocSearch-ErrorScreen)
 ) {
-	padding: 0 !important;
+	.DocSearch-Dropdown {
+		padding: 0 !important;
+	}
+
+	.DocSearch-SearchBar {
+		padding-bottom: 12px !important;
+	}
+
+	.DocSearch-Form {
+		border-bottom: none !important;
+		padding-bottom: 8px !important;
+	}
 }
 
 .DocSearch-Dropdown-Container {
