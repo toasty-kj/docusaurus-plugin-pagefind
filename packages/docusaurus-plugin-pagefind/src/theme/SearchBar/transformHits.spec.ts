@@ -48,6 +48,24 @@ describe('expandPagefindResult', () => {
 		expect(hits[1].hierarchy.lvl2).toBe('Config');
 	});
 
+	it('treats a sub_result whose title matches the page title as a page-level hit', () => {
+		const result = {
+			...baseResult,
+			sub_results: [
+				{ title: 'Introduction', url: '/docs/intro', excerpt: 'About it' },
+				{
+					title: 'Requirements',
+					url: '/docs/intro#requirements',
+					excerpt: 'need node',
+				},
+			],
+		};
+		const hits = expandPagefindResult(result as any, '');
+		expect(hits[0].hierarchy.lvl2).toBeNull();
+		expect(hits[0].breadcrumbSegments).toEqual([]);
+		expect(hits[1].hierarchy.lvl2).toBe('Requirements');
+	});
+
 	it('highlights matching terms in titleSegments', () => {
 		const hits = expandPagefindResult(baseResult as any, 'Intro');
 		expect(hits[0].titleSegments).toEqual([
