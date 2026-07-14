@@ -33,7 +33,7 @@
 	},
 	"dependencies": {
 		"@docsearch/css": "^3.0.0",
-		"@docsearch/react": "^3.0.0",
+		"@docsearch/react": "^4.6.3",
 		"@iconify/react": "^4.0.0",
 		"fast-glob": "^3.3.0"
 	},
