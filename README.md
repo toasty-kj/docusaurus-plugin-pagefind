@@ -1,4 +1,4 @@
-# docusaurus-plugin-pagefind
+# 🚧 docusaurus-plugin-pagefind
 
 A Docusaurus plugin that integrates [Pagefind](https://pagefind.app/) as a fast,
 offline-capable full-text search solution, using the DocSearch UI shell.
