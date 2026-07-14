@@ -4,5 +4,6 @@ dist/
 build/
 *.tsbuildinfo
 .superpowers/
+docs/superpowers/
 packages/docusaurus-plugin-pagefind/README.md
 packages/docusaurus-plugin-pagefind/LICENSE
