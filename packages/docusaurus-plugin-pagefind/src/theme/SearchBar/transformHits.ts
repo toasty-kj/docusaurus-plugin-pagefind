@@ -121,11 +121,12 @@ export function expandPagefindResult(
 	if (result.sub_results.length > 0) {
 		return result.sub_results.map((sub) => {
 			const excerpt = sub.excerpt ?? result.excerpt;
+			const isPageTitleMatch = sub.title === pageTitle;
 			return createDocSearchHit({
 				objectID: sub.url,
 				url: sub.url,
 				pageTitle,
-				subTitle: sub.title,
+				subTitle: isPageTitleMatch ? null : sub.title,
 				excerpt,
 				titleText: sub.title,
 				query,
