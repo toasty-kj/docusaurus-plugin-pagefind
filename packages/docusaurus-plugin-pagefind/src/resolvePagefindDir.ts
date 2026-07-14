@@ -36,3 +36,14 @@ export function resolvePagefindDir(
 
 	return { pagefindDir: relative.split(path.sep).join('/') };
 }
+
+/**
+ * Joins a Docusaurus `baseUrl` and the resolved pagefind subdirectory into
+ * the runtime URL for `pagefind.js`, collapsing any doubled slashes.
+ */
+export function buildPagefindJsUrl(
+	baseUrl: string,
+	pagefindDir: string,
+): string {
+	return `${baseUrl}/${pagefindDir}/pagefind.js`.replace(/\/{2,}/g, '/');
+}

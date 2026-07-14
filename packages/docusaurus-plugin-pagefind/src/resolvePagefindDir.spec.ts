@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolvePagefindDir } from './resolvePagefindDir';
+import { buildPagefindJsUrl, resolvePagefindDir } from './resolvePagefindDir';
 
 describe('resolvePagefindDir', () => {
 	it('defaults to the "pagefind" subdirectory when outputPath is not set', () => {
@@ -34,5 +34,27 @@ describe('resolvePagefindDir', () => {
 			outputPath: '/tmp/out/custom-dir',
 		});
 		expect(result.warning).toBeUndefined();
+	});
+});
+
+describe('buildPagefindJsUrl', () => {
+	it('joins a root baseUrl with the default pagefind subdirectory', () => {
+		expect(buildPagefindJsUrl('/', 'pagefind')).toBe('/pagefind/pagefind.js');
+	});
+
+	it('joins a non-root baseUrl with the default pagefind subdirectory', () => {
+		expect(buildPagefindJsUrl('/docusaurus-plugin-pagefind/', 'pagefind')).toBe(
+			'/docusaurus-plugin-pagefind/pagefind/pagefind.js',
+		);
+	});
+
+	it('joins a custom pagefind subdirectory', () => {
+		expect(buildPagefindJsUrl('/base/', 'custom-dir')).toBe(
+			'/base/custom-dir/pagefind.js',
+		);
+	});
+
+	it('collapses double slashes when pagefindDir is empty', () => {
+		expect(buildPagefindJsUrl('/base/', '')).toBe('/base/pagefind.js');
 	});
 });
