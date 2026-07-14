@@ -1,7 +1,17 @@
-# 🚧 docusaurus-plugin-pagefind
+# docusaurus-plugin-pagefind
+
+[![npm version](https://img.shields.io/npm/v/docusaurus-plugin-pagefind.svg)](https://www.npmjs.com/package/docusaurus-plugin-pagefind)
+[![npm downloads](https://img.shields.io/npm/dw/docusaurus-plugin-pagefind.svg)](https://www.npmjs.com/package/docusaurus-plugin-pagefind)
+[![CI](https://github.com/toasty-kj/docusaurus-plugin-pagefind/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/toasty-kj/docusaurus-plugin-pagefind/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/npm/l/docusaurus-plugin-pagefind.svg)](./LICENSE)
 
 A Docusaurus plugin that integrates [Pagefind](https://pagefind.app/) as a fast,
 offline-capable full-text search solution, using the DocSearch UI shell.
+
+🔗 [Live Demo](https://toasty-kj.github.io/docusaurus-plugin-pagefind/)
+
+<!-- TODO(cozytakaki): replace with a real GIF of the search modal in action -->
+![demo placeholder](./docs/demo-placeholder.png)
 
 ## Features
 
@@ -60,6 +70,12 @@ pnpm docusaurus swizzle docusaurus-plugin-pagefind SearchBar
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Community
+
+- [Contributing Guide](./CONTRIBUTING.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Security Policy](./SECURITY.md)
 
 ## License
 
