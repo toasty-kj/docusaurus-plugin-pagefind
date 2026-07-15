@@ -1,9 +1,9 @@
 export interface PluginOptions {
-	forceLanguage?: string;
-	excludeSelectors?: string[];
-	rootSelector?: string;
-	outputPath?: string;
-	excludeGlobs?: string[];
+	forceLanguage?: string
+	excludeSelectors?: string[]
+	rootSelector?: string
+	outputPath?: string
+	excludeGlobs?: string[]
 }
 
 /**
@@ -18,8 +18,8 @@ export const DEFAULT_EXCLUDE_SELECTORS: readonly string[] = [
 	'nav.theme-doc-breadcrumbs',
 	'.theme-doc-sidebar-container',
 	'.tocCollapsible',
-	'[data-pagefind-ignore]',
-];
+	'[data-pagefind-ignore]'
+]
 
 /**
  * Merges user options with defaults. `excludeSelectors` is additive: the
@@ -29,10 +29,7 @@ export const DEFAULT_EXCLUDE_SELECTORS: readonly string[] = [
  */
 export function resolveOptions(options: PluginOptions = {}): PluginOptions {
 	const excludeSelectors = Array.from(
-		new Set([
-			...DEFAULT_EXCLUDE_SELECTORS,
-			...(options.excludeSelectors ?? []),
-		]),
-	);
-	return { ...options, excludeSelectors };
+		new Set([...DEFAULT_EXCLUDE_SELECTORS, ...(options.excludeSelectors ?? [])])
+	)
+	return { ...options, excludeSelectors }
 }

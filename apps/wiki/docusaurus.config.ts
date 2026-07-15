@@ -1,4 +1,4 @@
-import type { Config } from '@docusaurus/types';
+import type { Config } from '@docusaurus/types'
 
 const config: Config = {
 	title: 'docusaurus-plugin-pagefind',
@@ -15,18 +15,18 @@ const config: Config = {
 			{
 				docs: { sidebarPath: './sidebars.ts', routeBasePath: '/' },
 				blog: false,
-				theme: {},
-			},
-		],
+				theme: {}
+			}
+		]
 	],
 
 	plugins: [
 		[
 			'docusaurus-plugin-pagefind',
 			{
-				excludeSelectors: ['.navbar', 'footer'],
-			},
-		],
+				excludeSelectors: ['.navbar', 'footer']
+			}
+		]
 	],
 
 	themeConfig: {
@@ -36,11 +36,11 @@ const config: Config = {
 				{
 					href: 'https://github.com/toasty-kj/docusaurus-plugin-pagefind',
 					label: 'GitHub',
-					position: 'right',
-				},
-			],
-		},
-	},
-};
+					position: 'right'
+				}
+			]
+		}
+	}
+}
 
-export default config;
+export default config
