@@ -166,7 +166,9 @@ export default function SearchBar(): React.JSX.Element {
 								appId="pagefind"
 								apiKey="pagefind"
 								disableUserPersonalization={true}
-								hitComponent={Hit as DocSearchModalProps['hitComponent']}
+								hitComponent={
+									Hit as unknown as DocSearchModalProps['hitComponent']
+								}
 							/>
 						</div>,
 						document.body
