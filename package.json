@@ -6,6 +6,7 @@
 		"test": "pnpm --filter docusaurus-plugin-pagefind test",
 		"build:wiki": "pnpm --filter wiki build",
 		"dev:wiki": "pnpm build && pnpm build:wiki && pnpm --filter wiki serve",
+		"test:e2e": "playwright test --config e2e/playwright.config.ts",
 		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
 		"prepare": "husky"
 	},
@@ -17,6 +18,7 @@
 		"@biomejs/biome": "2.5.3",
 		"@changesets/cli": "^2.27.0",
 		"@docusaurus/tsconfig": "^3.10.0",
+		"@playwright/test": "^1.61.1",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.0.8",
 		"playwright": "^1.61.1",
