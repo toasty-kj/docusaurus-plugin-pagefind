@@ -53,8 +53,10 @@ function Highlighted({
 		<>
 			{segments.map((segment, index) =>
 				segment.highlight ? (
+					// biome-ignore lint/suspicious/noArrayIndexKey: segments are a stable, ordered decomposition of a fixed string; they never reorder and hold no state
 					<mark key={index}>{segment.text}</mark>
 				) : (
+					// biome-ignore lint/suspicious/noArrayIndexKey: segments are a stable, ordered decomposition of a fixed string; they never reorder and hold no state
 					<Fragment key={index}>{segment.text}</Fragment>
 				)
 			)}
