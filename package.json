@@ -7,6 +7,8 @@
 		"build:wiki": "pnpm --filter wiki build",
 		"dev:wiki": "pnpm build && pnpm build:wiki && pnpm --filter wiki serve",
 		"test:e2e": "playwright test --config e2e/playwright.config.ts",
+		"test:e2e:ui": "playwright test --config e2e/playwright.config.ts --ui",
+		"test:e2e:report": "playwright show-report",
 		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
 		"prepare": "husky"
 	},
