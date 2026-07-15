@@ -41,7 +41,9 @@ function defaultLoader(): Promise<PagefindModule> {
 
 async function loadPagefind(): Promise<PagefindModule | null> {
 	if (pagefindPromise) return pagefindPromise
-	const loader = (globalThis as any).__pagefindLoader ?? defaultLoader
+	const loader =
+		(globalThis as { __pagefindLoader?: () => Promise<PagefindModule> })
+			.__pagefindLoader ?? defaultLoader
 	pagefindPromise = loader().catch(() => null)
 	return pagefindPromise
 }
