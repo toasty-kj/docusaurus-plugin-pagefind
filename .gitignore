@@ -7,3 +7,6 @@ build/
 packages/docusaurus-plugin-pagefind/README.md
 packages/docusaurus-plugin-pagefind/LICENSE
 .worktrees/
+e2e/.builds/
+playwright-report/
+test-results/
