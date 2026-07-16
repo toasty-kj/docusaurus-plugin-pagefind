@@ -1,17 +1,6 @@
 import path from 'node:path'
 import type { PluginOptions } from './options'
 
-/**
- * Pagefind ships an ESM-only Node API. This plugin compiles to CommonJS, and a
- * plain `import('pagefind')` would be downleveled to `require()` by tsc — which
- * throws `ERR_REQUIRE_ESM` on Node < 22.12. Hiding the import behind a Function
- * keeps it a genuine dynamic `import()` in the emitted CJS, and the bare
- * specifier resolves against the consumer's peer-installed `pagefind`.
- */
-const importESM = new Function('specifier', 'return import(specifier)') as (
-	specifier: string
-) => Promise<unknown>
-
 export interface PagefindIndexConfig {
 	rootSelector?: string
 	excludeSelectors?: string[]
@@ -65,8 +54,15 @@ function assertNoErrors(context: string, errors: string[] | undefined): void {
 	}
 }
 
+/**
+ * Pagefind ships an ESM-only Node API. This module only ever runs inside the
+ * pagefindWorker child process (plain Node, never jiti), and `module: nodenext`
+ * keeps dynamic `import()` as-is in the CJS emit, so the ESM-only package loads
+ * natively; the bare specifier resolves against the consumer's peer-installed
+ * `pagefind`.
+ */
 function loadPagefind(): Promise<PagefindNodeApi> {
-	return importESM('pagefind') as Promise<PagefindNodeApi>
+	return import('pagefind') as unknown as Promise<PagefindNodeApi>
 }
 
 export async function runPagefind(
