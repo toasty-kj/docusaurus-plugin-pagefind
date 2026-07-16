@@ -6,8 +6,9 @@
 		"test": "pnpm --filter docusaurus-plugin-pagefind test",
 		"build:wiki": "pnpm --filter wiki build",
 		"dev:wiki": "pnpm build && pnpm build:wiki && pnpm --filter wiki serve",
-		"test:e2e": "playwright test --config e2e/playwright.config.ts",
-		"test:e2e:ui": "playwright test --config e2e/playwright.config.ts --ui",
+		"e2e:prepare": "pnpm build && node e2e/scripts/build-fixtures.mts",
+		"test:e2e": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts",
+		"test:e2e:ui": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts --ui",
 		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
 		"prepare": "husky"
 	},
