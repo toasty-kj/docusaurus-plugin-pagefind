@@ -1,10 +1,10 @@
-import path from 'node:path';
-import type { PluginOptions } from './options';
-import { resolveOutputPath } from './runPagefind';
+import path from 'node:path'
+import type { PluginOptions } from './options'
+import { resolveOutputPath } from './runPagefind'
 
 export interface PagefindDirResult {
-	pagefindDir: string;
-	warning?: string;
+	pagefindDir: string
+	warning?: string
 }
 
 /**
@@ -16,11 +16,11 @@ export interface PagefindDirResult {
  */
 export function resolvePagefindDir(
 	outDir: string,
-	options: PluginOptions,
+	options: PluginOptions
 ): PagefindDirResult {
-	const resolvedOutputPath = resolveOutputPath(outDir, options);
-	const relative = path.relative(outDir, resolvedOutputPath);
-	const escapesOutDir = relative.startsWith('..') || path.isAbsolute(relative);
+	const resolvedOutputPath = resolveOutputPath(outDir, options)
+	const relative = path.relative(outDir, resolvedOutputPath)
+	const escapesOutDir = relative.startsWith('..') || path.isAbsolute(relative)
 
 	if (escapesOutDir) {
 		return {
@@ -30,11 +30,11 @@ export function resolvePagefindDir(
 				`outside the build output directory ("${outDir}"). Client-side search ` +
 				'may not be able to locate the Pagefind index automatically at runtime; ' +
 				`make sure it is served at "${outDir}/pagefind", or serve the custom ` +
-				'location yourself.',
-		};
+				'location yourself.'
+		}
 	}
 
-	return { pagefindDir: relative.split(path.sep).join('/') };
+	return { pagefindDir: relative.split(path.sep).join('/') }
 }
 
 /**
@@ -43,7 +43,7 @@ export function resolvePagefindDir(
  */
 export function buildPagefindJsUrl(
 	baseUrl: string,
-	pagefindDir: string,
+	pagefindDir: string
 ): string {
-	return `${baseUrl}/${pagefindDir}/pagefind.js`.replace(/\/{2,}/g, '/');
+	return `${baseUrl}/${pagefindDir}/pagefind.js`.replace(/\/{2,}/g, '/')
 }

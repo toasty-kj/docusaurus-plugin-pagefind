@@ -1,12 +1,12 @@
 import '@docsearch/css'
 import type {
 	DocSearchModalProps,
-	DocSearchTransformClient,
-} from '@docsearch/react';
-import { DocSearchButton, useDocSearchKeyboardEvents } from '@docsearch/react';
-import { useHistory } from '@docusaurus/router';
-import { Icon } from '@iconify/react';
-import type React from 'react';
+	DocSearchTransformClient
+} from '@docsearch/react'
+import { DocSearchButton, useDocSearchKeyboardEvents } from '@docsearch/react'
+import { useHistory } from '@docusaurus/router'
+import { Icon } from '@iconify/react'
+import type React from 'react'
 import {
 	Fragment,
 	useCallback,

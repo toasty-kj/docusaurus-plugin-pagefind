@@ -4,23 +4,23 @@ import { promisify } from 'node:util'
 import type { LoadContext, Plugin } from '@docusaurus/types'
 import { injectIgnoreMarkers } from './injectIgnoreMarkers'
 import { type PluginOptions, resolveOptions } from './options'
-import { buildPagefindJsUrl, resolvePagefindDir } from './resolvePagefindDir';
+import { buildPagefindJsUrl, resolvePagefindDir } from './resolvePagefindDir'
 
 const execFileAsync = promisify(execFile)
 
 export default function pluginPagefind(
 	context: LoadContext,
-	options: PluginOptions = {},
+	options: PluginOptions = {}
 ): Plugin<void> {
-	const mergedOptions = resolveOptions(options);
+	const mergedOptions = resolveOptions(options)
 	const { pagefindDir, warning } = resolvePagefindDir(
 		context.outDir,
-		mergedOptions,
-	);
+		mergedOptions
+	)
 	const pagefindJsUrl = buildPagefindJsUrl(
 		context.siteConfig.baseUrl,
-		pagefindDir,
-	);
+		pagefindDir
+	)
 
 	return {
 		name: 'docusaurus-plugin-pagefind',
@@ -50,11 +50,8 @@ export default function pluginPagefind(
 						callback: (err?: Error | null, result?: string) => void
 					) => {
 						if (request === '/pagefind/pagefind.js') {
-							callback(
-								null,
-								`promise import(${JSON.stringify(pagefindJsUrl)})`,
-							);
-							return;
+							callback(null, `promise import(${JSON.stringify(pagefindJsUrl)})`)
+							return
 						}
 						callback()
 					}
@@ -64,7 +61,7 @@ export default function pluginPagefind(
 
 		async postBuild({ outDir }) {
 			if (warning) {
-				console.warn(warning);
+				console.warn(warning)
 			}
 			if (mergedOptions.excludeGlobs && mergedOptions.excludeGlobs.length > 0) {
 				await injectIgnoreMarkers(outDir, mergedOptions.excludeGlobs)

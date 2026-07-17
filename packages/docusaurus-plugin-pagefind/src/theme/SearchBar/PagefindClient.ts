@@ -36,14 +36,16 @@ function defaultLoader(): Promise<PagefindModule> {
 	return import(
 		// @ts-expect-error: /pagefind/pagefind.js is a runtime-only path served by Docusaurus build output
 		'/pagefind/pagefind.js'
-	) as Promise<PagefindModule>;
+	) as Promise<PagefindModule>
 }
 
 async function loadPagefind(): Promise<PagefindModule | null> {
-	if (pagefindPromise) return pagefindPromise;
-	const loader = (globalThis as any).__pagefindLoader ?? defaultLoader;
-	pagefindPromise = loader().catch(() => null);
-	return pagefindPromise;
+	if (pagefindPromise) return pagefindPromise
+	const loader =
+		(globalThis as { __pagefindLoader?: () => Promise<PagefindModule> })
+			.__pagefindLoader ?? defaultLoader
+	pagefindPromise = loader().catch(() => null)
+	return pagefindPromise
 }
 
 const MAX_PAGES = 8
@@ -71,10 +73,10 @@ export function createPagefindSearch() {
 	return async function search(
 		req: AlgoliaSearchRequest
 	): Promise<AlgoliaSearchResponse> {
-		const first = req.requests[0];
-		const query = first?.query ?? '';
-		const indexName = first?.indexName ?? 'pagefind';
-		const pf = await loadPagefind();
+		const first = req.requests[0]
+		const query = first?.query ?? ''
+		const indexName = first?.indexName ?? 'pagefind'
+		const pf = await loadPagefind()
 		if (!pf || !query) {
 			return { results: [buildResponseItem(query, indexName)] }
 		}
