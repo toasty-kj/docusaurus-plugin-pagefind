@@ -69,3 +69,11 @@ pnpm build:wiki            # Full wiki build (runs pagefind postBuild)
 - Tests live alongside source: `src/**/*.spec.ts`
 - Test framework: Vitest — use `vi.fn()` not `jest.fn()`
 - Do not import from `@docusaurus/utils`
+
+## Working Notes Policy
+
+- `docs/superpowers/` (design specs and implementation plans) are local working
+  notes — **never commit them**. They go stale as soon as the implementation
+  lands and are not kept in sync with the code.
+- Durable design rationale belongs in PR descriptions and commit messages
+  instead.
