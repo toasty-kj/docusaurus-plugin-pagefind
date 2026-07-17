@@ -1,8 +1,11 @@
+import { execFile } from 'node:child_process'
 import path from 'node:path'
+import { promisify } from 'node:util'
 import type { LoadContext, Plugin } from '@docusaurus/types'
 import { injectIgnoreMarkers } from './injectIgnoreMarkers'
 import { type PluginOptions, resolveOptions } from './options'
-import { runPagefind } from './runPagefind'
+
+const execFileAsync = promisify(execFile)
 
 export default function pluginPagefind(
 	_context: LoadContext,
@@ -48,7 +51,15 @@ export default function pluginPagefind(
 			if (mergedOptions.excludeGlobs && mergedOptions.excludeGlobs.length > 0) {
 				await injectIgnoreMarkers(outDir, mergedOptions.excludeGlobs)
 			}
-			await runPagefind(outDir, mergedOptions)
+			// The ESM-only pagefind package cannot be import()ed from plugin code:
+			// Docusaurus loads plugins through jiti, whose CJS transform/sandbox
+			// breaks both plain dynamic import() and the new-Function escape hatch.
+			// Run the indexing step in a plain Node child process instead, where
+			// native import() just works (see pagefindWorker.mts).
+			await execFileAsync(process.execPath, [
+				path.join(__dirname, 'pagefindWorker.mjs'),
+				JSON.stringify({ outDir, options: mergedOptions })
+			])
 		}
 	}
 }
