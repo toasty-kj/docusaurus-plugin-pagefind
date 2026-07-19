@@ -24,7 +24,10 @@ every fixture variant into `e2e/.builds/<variant>` (gitignored).
 | `fixtures/site/`                 | The Docusaurus site under test (`@fixtures/site`)           |
 | `scripts/build-fixtures.mts`     | Builds each variant sequentially, before Playwright starts  |
 | `playwright.config.ts`           | Derives projects + webServers from `variants.ts`            |
-| `tests/`                         | Specs — each runs once per variant                          |
+| `tests/helpers.ts`               | Shared search helpers (not a spec — no project matches it)  |
+| `tests/shared/`                  | Specs true under every build                                |
+| `tests/no-options/`              | Specs true only when no plugin options are set              |
+| `tests/options/`                 | Specs true only for the combined-options build              |
 
 ## The variant matrix
 
@@ -40,6 +43,7 @@ Current variants:
 
 - `root-baseurl` — `baseUrl: '/'`, port 3100
 - `non-root-baseurl` — `baseUrl: '/fixture-base/'`, port 3101
+- `options-combined` — `baseUrl: '/'`, port 3102, all four plugin options set
 
 ## Why builds are serialized outside Playwright
 
@@ -55,6 +59,35 @@ because it honours the site's `baseUrl` and returns the correct JavaScript MIME
 type — a naive static server gets the latter wrong, which is the exact failure
 mode the original bug produced.
 
+## Tiers: which specs run where
+
+Each variant declares the tiers it runs (`Variant.tiers`), and
+`playwright.config.ts` turns those into the project's `testMatch`. **Splitting
+specs into directories does nothing on its own** — Playwright projects are a
+cross product with specs, so without `testMatch` every variant would run every
+spec. The directory split and `testMatch` only work as a pair.
+
+Because a spec runs only where its expectations hold, expectations are
+hardcoded. **No spec should branch on `test.info().project.name`.** If you find
+yourself wanting to, the spec is in the wrong tier — split it.
+
+Choosing a tier comes down to one question: *under which builds is this
+assertion true?*
+
+- True everywhere → `tests/shared/`
+- True only without plugin options → `tests/no-options/`
+- True only for the combined-options build → `tests/options/`
+
+`tests/no-options/` is the positive half of the exclusion pairs in
+`tests/options/`. Every "this token is absent" assertion needs a matching "this
+token is present" assertion in `no-options/`, or it would pass just as well if
+the token had never been indexable.
+
+The suite runs 44 executions off three builds. Total executions are deliberately
+*not* minimised: the three serialized `docusaurus build` runs dominate the
+runtime and are fixed, while browser assertions are cheap and run in parallel —
+so `tests/shared/` runs on all three variants rather than being gated to one.
+
 ## Writing specs
 
 Specs get the variant's origin *and* `baseUrl` through Playwright's `baseURL`,
@@ -64,3 +97,11 @@ paths:
 ```ts
 await page.goto('./') // '/' would drop a non-root baseUrl
 ```
+
+Prefer the helpers in `tests/helpers.ts` over hand-rolled modal interaction.
+`expectNoHits` in particular runs a positive control search first, so a zero
+result count means "excluded from the index" rather than "the index never
+loaded".
+
+Fixture search tokens follow a `zz<name>token` convention and must be unique
+across the site.
