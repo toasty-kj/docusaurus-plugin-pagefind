@@ -35,7 +35,7 @@ let pagefindPromise: Promise<PagefindModule | null> | null = null
 function defaultLoader(): Promise<PagefindModule> {
 	return import(
 		// @ts-expect-error: /pagefind/pagefind.js is a runtime-only path served by Docusaurus build output
-		/* webpackIgnore: true */ '/pagefind/pagefind.js'
+		'/pagefind/pagefind.js'
 	) as Promise<PagefindModule>
 }
 

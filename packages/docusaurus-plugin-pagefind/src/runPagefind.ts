@@ -38,17 +38,6 @@ export function buildIndexConfig(
 	return config
 }
 
-/**
- * Resolves where the Pagefind bundle is written. Preserves the Pagefind CLI
- * default of `<outDir>/pagefind` when no custom `outputPath` is given.
- */
-export function resolveOutputPath(
-	outDir: string,
-	options: PluginOptions
-): string {
-	return options.outputPath ?? path.join(outDir, 'pagefind')
-}
-
 function assertNoErrors(context: string, errors: string[] | undefined): void {
 	if (errors && errors.length > 0) {
 		throw new Error(`Pagefind ${context} failed:\n${errors.join('\n')}`)
@@ -83,7 +72,7 @@ export async function runPagefind(
 		const { errors: addErrors } = await index.addDirectory({ path: outDir })
 		assertNoErrors('indexing', addErrors)
 		const { errors: writeErrors } = await index.writeFiles({
-			outputPath: resolveOutputPath(outDir, options)
+			outputPath: path.join(outDir, 'pagefind')
 		})
 		assertNoErrors('writing index files', writeErrors)
 	} finally {

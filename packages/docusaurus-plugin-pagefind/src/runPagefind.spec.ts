@@ -3,7 +3,6 @@ import {
 	buildIndexConfig,
 	type PagefindIndex,
 	type PagefindNodeApi,
-	resolveOutputPath,
 	runPagefind
 } from './runPagefind'
 
@@ -28,22 +27,6 @@ describe('buildIndexConfig', () => {
 
 	it('omits excludeSelectors when the list is empty', () => {
 		expect(buildIndexConfig({ excludeSelectors: [] })).toEqual({})
-	})
-
-	it('ignores outputPath (handled by resolveOutputPath, not the index)', () => {
-		expect(buildIndexConfig({ outputPath: '/custom' })).toEqual({})
-	})
-})
-
-describe('resolveOutputPath', () => {
-	it('defaults to <outDir>/pagefind', () => {
-		expect(resolveOutputPath('/tmp/out', {})).toBe('/tmp/out/pagefind')
-	})
-
-	it('uses a custom outputPath when provided', () => {
-		expect(resolveOutputPath('/tmp/out', { outputPath: '/custom/path' })).toBe(
-			'/custom/path'
-		)
 	})
 })
 

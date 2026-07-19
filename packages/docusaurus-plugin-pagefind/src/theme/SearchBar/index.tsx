@@ -4,7 +4,6 @@ import type {
 	DocSearchTransformClient
 } from '@docsearch/react'
 import { DocSearchButton, useDocSearchKeyboardEvents } from '@docsearch/react'
-import Head from '@docusaurus/Head'
 import { useHistory } from '@docusaurus/router'
 import { Icon } from '@iconify/react'
 import type React from 'react'
@@ -143,9 +142,6 @@ export default function SearchBar(): React.JSX.Element {
 
 	return (
 		<>
-			<Head>
-				<link rel="preconnect" href="/pagefind/" />
-			</Head>
 			<DocSearchButton
 				onTouchStart={importDocSearchModal}
 				onFocus={importDocSearchModal}
