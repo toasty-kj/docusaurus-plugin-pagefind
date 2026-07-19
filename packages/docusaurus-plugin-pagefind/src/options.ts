@@ -2,7 +2,6 @@ export interface PluginOptions {
 	forceLanguage?: string
 	excludeSelectors?: string[]
 	rootSelector?: string
-	outputPath?: string
 	excludeGlobs?: string[]
 }
 

@@ -48,7 +48,6 @@ export default {
 | `forceLanguage` | `string` | — | Language code passed to pagefind |
 | `excludeSelectors` | `string[]` | `.navbar, footer, ...` | Extra CSS selectors excluded from index (added on top of the built-in exclusions) |
 | `rootSelector` | `string` | — | Root element for indexing |
-| `outputPath` | `string` | — | Output directory for pagefind index |
 | `excludeGlobs` | `string[]` | — | Pages to exclude (glob relative to outDir) |
 
 ## Swizzling

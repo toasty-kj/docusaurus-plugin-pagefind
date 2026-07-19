@@ -12,7 +12,7 @@ export interface PagefindIndex {
 		path: string
 		glob?: string
 	}): Promise<{ errors: string[]; page_count: number }>
-	writeFiles(options: { outputPath?: string }): Promise<{ errors: string[] }>
+	writeFiles(options: { outputPath: string }): Promise<{ errors: string[] }>
 }
 
 export interface PagefindNodeApi {
@@ -35,17 +35,6 @@ export function buildIndexConfig(options: PluginOptions): PagefindIndexConfig {
 		config.forceLanguage = options.forceLanguage
 	}
 	return config
-}
-
-/**
- * Resolves where the Pagefind bundle is written. Preserves the Pagefind CLI
- * default of `<outDir>/pagefind` when no custom `outputPath` is given.
- */
-export function resolveOutputPath(
-	outDir: string,
-	options: PluginOptions
-): string {
-	return options.outputPath ?? path.join(outDir, 'pagefind')
 }
 
 function assertNoErrors(context: string, errors: string[] | undefined): void {
@@ -82,7 +71,7 @@ export async function runPagefind(
 		const { errors: addErrors } = await index.addDirectory({ path: outDir })
 		assertNoErrors('indexing', addErrors)
 		const { errors: writeErrors } = await index.writeFiles({
-			outputPath: resolveOutputPath(outDir, options)
+			outputPath: path.join(outDir, 'pagefind')
 		})
 		assertNoErrors('writing index files', writeErrors)
 	} finally {

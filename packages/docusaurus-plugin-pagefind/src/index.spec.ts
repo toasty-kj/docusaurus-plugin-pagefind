@@ -68,31 +68,16 @@ describe('pluginPagefind', () => {
 		expect(matchExternal(plugin, 'react')).toBeUndefined()
 	})
 
-	it('warns during postBuild when outputPath escapes outDir, and still runs pagefind', async () => {
-		const plugin = pluginPagefind(createContext('/tmp/out', '/'), {
-			outputPath: '/elsewhere'
-		})
-		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-		await plugin.postBuild?.({ outDir: '/tmp/out' } as any)
-		expect(warnSpy).toHaveBeenCalledWith(
-			expect.stringContaining('outside the build output directory')
-		)
-		expect(execFile).toHaveBeenCalledWith(
-			process.execPath,
-			[
-				expect.stringContaining('pagefindWorker.mjs'),
-				expect.stringContaining('"outputPath":"/elsewhere"')
-			],
-			expect.any(Function)
-		)
-		warnSpy.mockRestore()
-	})
-
-	it('does not warn during postBuild for the default outputPath', async () => {
+	it('runs the pagefind worker during postBuild without warning', async () => {
 		const plugin = pluginPagefind(createContext('/tmp/out', '/'), {})
 		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		await plugin.postBuild?.({ outDir: '/tmp/out' } as any)
 		expect(warnSpy).not.toHaveBeenCalled()
+		expect(execFile).toHaveBeenCalledWith(
+			process.execPath,
+			[expect.stringContaining('pagefindWorker.mjs'), expect.any(String)],
+			expect.any(Function)
+		)
 		warnSpy.mockRestore()
 	})
 })
