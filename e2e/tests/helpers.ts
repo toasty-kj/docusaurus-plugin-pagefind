@@ -1,9 +1,28 @@
+import { promises as fs } from 'node:fs'
+import path from 'node:path'
 import { expect, type Locator, type Page } from '@playwright/test'
 
 const SEARCH_TIMEOUT = 15_000
 
 /** A token present in the fixture site under every variant. */
 export const CONTROL_TOKEN = 'zzsearchtoken'
+
+interface PagefindEntry {
+	languages: Record<string, unknown>
+}
+
+/** Reads the `pagefind-entry.json` build artifact for the named variant. */
+export async function readPagefindEntry(
+	variantName: string
+): Promise<PagefindEntry> {
+	const entryPath = path.resolve(
+		import.meta.dirname,
+		'../.builds',
+		variantName,
+		'pagefind/pagefind-entry.json'
+	)
+	return JSON.parse(await fs.readFile(entryPath, 'utf8'))
+}
 
 export function hits(page: Page): Locator {
 	return page.locator('.pagefindHit')

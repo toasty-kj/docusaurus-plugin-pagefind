@@ -1,15 +1,13 @@
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
 import { expect, test } from '@playwright/test'
+import { readPagefindEntry } from '../helpers'
 
 // forceLanguage has no observable effect in the UI, so it is verified against
-// the index metadata Pagefind writes at build time.
+// the index metadata Pagefind writes at build time. This is the negative half
+// of the pair in tests/no-options/index-artifacts.spec.ts: the fixture's
+// translated page (<html lang="ja">) is present in this build too, so a
+// single 'en' key here is only possible because forceLanguage collapsed it.
 test('forceLanguage pins the index to a single language', async () => {
-	const entryPath = path.resolve(
-		import.meta.dirname,
-		'../../.builds/options-combined/pagefind/pagefind-entry.json'
-	)
-	const entry = JSON.parse(await fs.readFile(entryPath, 'utf8'))
+	const entry = await readPagefindEntry('options-combined')
 
 	expect(Object.keys(entry.languages)).toEqual(['en'])
 })
