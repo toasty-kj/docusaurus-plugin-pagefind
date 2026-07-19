@@ -1,0 +1,57 @@
+# Pagefind Node API — local reference (llms.txt)
+
+Curated for this repo: only the surface the plugin actually calls, so an agent can
+reason about the indexing step without fetching the network. Source of truth:
+https://pagefind.app/docs/node-api/ (verify there if something looks stale).
+
+Used by: packages/docusaurus-plugin-pagefind/src/runPagefind.ts (inside the
+pagefindWorker child process — see docs/architecture.md for why it runs there).
+
+## Import (ESM-only)
+
+The `pagefind` package is ESM-only. It cannot be require()'d and cannot be
+import()'d from plugin code running under Docusaurus/jiti — load it only inside
+the plain-Node worker:
+
+    const pagefind = await import('pagefind')   // resolves to the consumer's peer-installed copy
+
+## Top-level functions
+
+createIndex(config?) => Promise<{ errors: string[]; index?: PagefindIndex }>
+  Creates an index instance. Always check `errors` and that `index` exists.
+  config (PagefindServiceConfig) — all optional:
+    rootSelector?: string          // root element to index (plugin: options.rootSelector)
+    excludeSelectors?: string[]    // selectors to skip   (plugin: options.excludeSelectors, additive)
+    forceLanguage?: string         // ISO 639-1 code       (plugin: options.forceLanguage)
+    includeCharacters?: string
+    keepIndexUrl?: boolean
+    writePlayground?: boolean
+    verbose?: boolean
+    logfile?: string
+
+close() => Promise<void>
+  Terminates the Pagefind binary. Call in a `finally` so the process always exits.
+
+## PagefindIndex methods (only the ones the plugin uses)
+
+index.addDirectory(options) => Promise<{ errors: string[]; page_count: number }>
+  Indexes HTML on disk.
+    path: string    // directory, relative to cwd (plugin passes outDir)
+    glob?: string   // default '**/*.{html}'
+
+index.writeFiles(options) => Promise<{ errors: string[] }>
+  Writes the bundle to disk.
+    outputPath: string   // plugin: options.outputPath ?? <outDir>/pagefind
+
+## Also available (not currently used — listed so the agent knows they exist)
+
+  index.addHTMLFile({ sourcePath | url, content }) => { errors, file }
+  index.addCustomRecord({ url, content, language, meta?, filters?, sort? }) => { errors, file }
+  index.getFiles() => { errors, files: Array<{ path, content: Uint8Array }> }
+  index.deleteIndex() => Promise<void>
+
+## Error-handling contract (as implemented in runPagefind.ts)
+
+Every call returns an `errors: string[]`. Treat a non-empty array as failure and
+throw with context. The current flow: createIndex -> addDirectory -> writeFiles,
+then close() in `finally`.

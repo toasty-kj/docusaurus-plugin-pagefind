@@ -1,0 +1,56 @@
+# Docusaurus plugin API — local reference (llms.txt)
+
+Curated for this repo: only the lifecycle methods this plugin implements, so an
+agent can reason about index.ts without fetching the network. Sources of truth:
+https://docusaurus.io/docs/api/plugin-methods/lifecycle-apis
+https://docusaurus.io/docs/api/plugin-methods/extend-infrastructure
+(verify there if something looks stale).
+
+Used by: packages/docusaurus-plugin-pagefind/src/index.ts. A plugin is a function
+`(context: LoadContext, options) => Plugin` returning an object with `name` plus
+the lifecycle hooks below.
+
+## postBuild(props) => void | Promise<void>
+
+Runs after the production build completes. This plugin uses it to inject ignore
+markers and spawn the Pagefind worker.
+Props (subset this plugin reads):
+  outDir: string          // final build output dir (passed to the worker & Pagefind)
+  siteConfig: object       // resolved docusaurus.config
+  siteDir: string
+  routesPaths: string[]    // every rendered route
+  head / headTags, preBodyTags, postBodyTags
+  content                  // this plugin's loaded content (none)
+
+## configureWebpack(config, isServer, utils, content) => object
+
+Return value is merged into the webpack config via webpack-merge. This plugin
+returns an `externals` entry so the runtime asset `/pagefind/pagefind.js` is not
+bundled (it is generated at build time, not resolvable at compile time). See
+docs/architecture.md "webpack externals" for why the /* webpackIgnore */ comment
+is not reliable here.
+  config: current webpack config (client or server)
+  isServer: boolean        // server build = true
+  utils: { getStyleLoaders(), getJSLoader() }
+  content: plugin content
+NOTE: Docusaurus may change this signature to
+`configureWebpack({ config, isServer, utils, content })` (single object). The
+current impl ignores all params, so it won't break — update when that ships.
+
+## getThemePath() => string
+
+Returns the directory of COMPILED theme components (JS) that webpack renders.
+This plugin returns `dist/theme/` (resolved from __dirname).
+
+## getTypeScriptThemePath() => string
+
+Returns the directory of theme SOURCE (TypeScript), used ONLY by `swizzle` — NOT
+processed by webpack. This plugin returns `src/theme/`. Both dirs must ship in the
+package: "files": ["dist", "src/theme"].
+
+## Other lifecycle hooks (not used here — for orientation)
+
+  loadContent()            // fetch/produce data before rendering
+  contentLoaded({content, actions})  // create routes, set global data
+  extendCli(cli)           // add `docusaurus <command>` subcommands
+  injectHtmlTags()         // add tags to <head>/<body>
