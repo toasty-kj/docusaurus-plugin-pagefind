@@ -9,3 +9,9 @@ test('internal pages are indexed when excludeGlobs is unset', async ({
 }) => {
 	await expectHits(page, 'zzinternaltoken')
 })
+
+test('ad regions are indexed when excludeSelectors is unset', async ({
+	page
+}) => {
+	await expectHits(page, 'zzadtoken')
+})
