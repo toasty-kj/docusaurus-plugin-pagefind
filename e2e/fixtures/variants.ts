@@ -31,6 +31,18 @@ export const variants: Variant[] = [
 		port: 3101,
 		pluginOptions: {},
 		tiers: ['shared', 'no-options']
+	},
+	{
+		name: 'options-combined',
+		baseUrl: '/',
+		port: 3102,
+		pluginOptions: {
+			excludeGlobs: ['internal/**'],
+			excludeSelectors: ['.ad-region'],
+			rootSelector: 'main',
+			forceLanguage: 'en'
+		},
+		tiers: ['shared', 'options']
 	}
 ]
 
