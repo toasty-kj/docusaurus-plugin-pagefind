@@ -27,6 +27,7 @@ export default defineConfig({
 	use: { trace: 'on-first-retry' },
 	projects: variants.map((variant) => ({
 		name: variant.name,
+		testMatch: variant.tiers.map((tier) => `**/${tier}/**/*.spec.ts`),
 		use: { ...devices['Desktop Chrome'], baseURL: variantUrl(variant) }
 	})),
 	webServer: variants.map((variant) => ({
