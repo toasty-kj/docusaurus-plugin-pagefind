@@ -12,7 +12,11 @@ describe('buildPagefindJsUrl', () => {
 		)
 	})
 
-	it('collapses doubled slashes from a baseUrl without a trailing slash', () => {
+	it('joins a baseUrl that has no trailing slash', () => {
 		expect(buildPagefindJsUrl('/base')).toBe('/base/pagefind/pagefind.js')
+	})
+
+	it('collapses the doubled slash produced by a trailing-slash baseUrl', () => {
+		expect(buildPagefindJsUrl('/base/')).toBe('/base/pagefind/pagefind.js')
 	})
 })
