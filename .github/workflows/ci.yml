@@ -16,8 +16,8 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: "22"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -30,6 +30,9 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
 
       - name: Build wiki
         run: pnpm build:wiki
