@@ -15,3 +15,9 @@ test('ad regions are indexed when excludeSelectors is unset', async ({
 }) => {
 	await expectHits(page, 'zzadtoken')
 })
+
+test('content outside main is indexed when rootSelector is unset', async ({
+	page
+}) => {
+	await expectHits(page, 'zzchrometoken')
+})

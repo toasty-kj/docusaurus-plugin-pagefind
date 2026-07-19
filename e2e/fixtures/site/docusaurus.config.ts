@@ -19,7 +19,14 @@ const config: Config = {
 			}
 		]
 	],
-	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]]
+	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]],
+	themeConfig: {
+		announcementBar: {
+			id: 'chrome-probe',
+			content: 'Announcement containing zzchrometoken',
+			isCloseable: false
+		}
+	}
 }
 
 export default config
