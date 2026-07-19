@@ -2,7 +2,6 @@ import { execFile } from 'node:child_process'
 import path from 'node:path'
 import { promisify } from 'node:util'
 import type { LoadContext, Plugin } from '@docusaurus/types'
-import { injectIgnoreMarkers } from './injectIgnoreMarkers'
 import { type PluginOptions, resolveOptions } from './options'
 import { buildPagefindJsUrl } from './pagefindUrl'
 
@@ -53,9 +52,6 @@ export default function pluginPagefind(
 		},
 
 		async postBuild({ outDir }) {
-			if (mergedOptions.excludeGlobs && mergedOptions.excludeGlobs.length > 0) {
-				await injectIgnoreMarkers(outDir, mergedOptions.excludeGlobs)
-			}
 			// The ESM-only pagefind package cannot be import()ed from plugin code:
 			// Docusaurus loads plugins through jiti, whose CJS transform/sandbox
 			// breaks both plain dynamic import() and the new-Function escape hatch.
