@@ -1,30 +1,31 @@
 import path from 'node:path'
+// Type-only imports are erased at compile time, so referencing the ESM-only
+// `pagefind` package here is safe even though this module is emitted as CJS.
+// The package itself is a devDependency purely for these declarations; at
+// runtime the consumer's peer-installed copy is loaded via import() below.
+import type { PagefindServiceConfig } from 'pagefind'
 import type { PluginOptions } from './options'
 
-export interface PagefindIndexConfig {
-	rootSelector?: string
-	excludeSelectors?: string[]
-	forceLanguage?: string
-}
+/**
+ * Narrow views of the official pagefind types: derived with `Pick` so they
+ * track the upstream API, but limited to what this plugin calls so test
+ * fakes stay small.
+ */
+export type PagefindIndex = Pick<
+	import('pagefind').PagefindIndex,
+	'addDirectory' | 'writeFiles'
+>
 
-export interface PagefindIndex {
-	addDirectory(options: {
-		path: string
-		glob?: string
-	}): Promise<{ errors: string[]; page_count: number }>
-	writeFiles(options: { outputPath: string }): Promise<{ errors: string[] }>
-}
-
-export interface PagefindNodeApi {
-	createIndex(
-		config?: PagefindIndexConfig
-	): Promise<{ errors: string[]; index: PagefindIndex }>
-	close(): Promise<void>
-}
+export type PagefindNodeApi = Pick<
+	typeof import('pagefind'),
+	'createIndex' | 'close'
+>
 
 /** Maps plugin options to a Pagefind `createIndex` config. Pure/testable. */
-export function buildIndexConfig(options: PluginOptions): PagefindIndexConfig {
-	const config: PagefindIndexConfig = {}
+export function buildIndexConfig(
+	options: PluginOptions
+): PagefindServiceConfig {
+	const config: PagefindServiceConfig = {}
 	if (options.rootSelector) {
 		config.rootSelector = options.rootSelector
 	}
@@ -51,7 +52,7 @@ function assertNoErrors(context: string, errors: string[] | undefined): void {
  * `pagefind`.
  */
 function loadPagefind(): Promise<PagefindNodeApi> {
-	return import('pagefind') as unknown as Promise<PagefindNodeApi>
+	return import('pagefind')
 }
 
 export async function runPagefind(
