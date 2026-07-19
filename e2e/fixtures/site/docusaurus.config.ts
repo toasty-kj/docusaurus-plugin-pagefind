@@ -25,6 +25,14 @@ const config: Config = {
 			id: 'chrome-probe',
 			content: 'Announcement containing zzchrometoken',
 			isCloseable: false
+		},
+		navbar: {
+			title: 'Fixture zznavtoken',
+			items: []
+		},
+		footer: {
+			style: 'dark',
+			copyright: 'Footer containing zzfootertoken'
 		}
 	}
 }
