@@ -1,7 +1,7 @@
-import { defineConfig, devices } from '@playwright/test';
-import { type Variant, variants, variantUrl } from './fixtures/variants';
+import { defineConfig, devices } from '@playwright/test'
+import { type Variant, variants, variantUrl } from './fixtures/variants'
 
-const SITE = 'pnpm --filter @fixtures/site exec';
+const SITE = 'pnpm --filter @fixtures/site exec'
 
 // Variants are prebuilt into e2e/.builds/<name> by scripts/build-fixtures.mts
 // (run via `pnpm test:e2e`) — building here would race, because webServers
@@ -13,7 +13,7 @@ function serveVariant(variant: Variant): string {
 	return (
 		`FIXTURE_VARIANT=${variant.name} ${SITE} docusaurus serve ` +
 		`--dir ../../.builds/${variant.name} --port ${variant.port} --no-open`
-	);
+	)
 }
 
 // One Playwright project per variant: every spec runs against every variant,
@@ -27,12 +27,12 @@ export default defineConfig({
 	use: { trace: 'on-first-retry' },
 	projects: variants.map((variant) => ({
 		name: variant.name,
-		use: { ...devices['Desktop Chrome'], baseURL: variantUrl(variant) },
+		use: { ...devices['Desktop Chrome'], baseURL: variantUrl(variant) }
 	})),
 	webServer: variants.map((variant) => ({
 		command: serveVariant(variant),
 		url: variantUrl(variant),
 		reuseExistingServer: !process.env.CI,
-		timeout: 30_000,
-	})),
-});
+		timeout: 30_000
+	}))
+})

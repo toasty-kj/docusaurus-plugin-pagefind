@@ -106,9 +106,6 @@ importers:
       fast-glob:
         specifier: ^3.3.0
         version: 3.3.3
-      pagefind:
-        specifier: '>=1.1.0'
-        version: 1.5.2
       react:
         specifier: '>=18.0.0'
         version: 19.2.7
@@ -128,6 +125,9 @@ importers:
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.1
+      pagefind:
+        specifier: ^1.5.2
+        version: 1.5.2
       typescript:
         specifier: ^5.0.0
         version: 5.9.3

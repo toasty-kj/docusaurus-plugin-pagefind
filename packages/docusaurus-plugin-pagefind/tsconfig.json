@@ -1,6 +1,10 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
+		// nodenext picks the format per file: .ts stays CJS (no "type" field),
+		// .mts is emitted as genuine ESM (pagefindWorker.mts needs this).
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"outDir": "./dist",
 		"rootDir": "./src",
 		"noEmit": false,

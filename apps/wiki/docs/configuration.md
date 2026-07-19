@@ -13,7 +13,6 @@ sidebar_position: 3
 | `forceLanguage` | `string` | — | Language code passed to pagefind (e.g. `'ja'`) |
 | `excludeSelectors` | `string[]` | `.navbar, footer, ...` | Extra CSS selectors excluded from the index. Added on top of the built-in Docusaurus chrome exclusions, not a replacement |
 | `rootSelector` | `string` | — | Root element for indexing (default: full body) |
-| `outputPath` | `string` | — | Custom output path for the pagefind index |
 | `excludeGlobs` | `string[]` | — | Glob patterns for pages to exclude from the index |
 
 ## Example

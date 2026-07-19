@@ -1,7 +1,7 @@
-import type { Config } from '@docusaurus/types';
-import { getVariant } from '../variants';
+import type { Config } from '@docusaurus/types'
+import { getVariant } from '../variants'
 
-const variant = getVariant(process.env.FIXTURE_VARIANT);
+const variant = getVariant(process.env.FIXTURE_VARIANT)
 
 const config: Config = {
 	title: 'pagefind e2e fixture',
@@ -15,11 +15,11 @@ const config: Config = {
 			{
 				docs: { sidebarPath: './sidebars.ts', routeBasePath: '/' },
 				blog: false,
-				theme: {},
-			},
-		],
+				theme: {}
+			}
+		]
 	],
-	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]],
-};
+	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]]
+}
 
-export default config;
+export default config
