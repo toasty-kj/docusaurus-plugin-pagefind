@@ -33,6 +33,7 @@ const config: Config = {
 		navbar: {
 			title: 'docusaurus-plugin-pagefind',
 			items: [
+				{ to: '/changelog', label: 'Changelog', position: 'right' },
 				{
 					href: 'https://github.com/toasty-kj/docusaurus-plugin-pagefind',
 					label: 'GitHub',
