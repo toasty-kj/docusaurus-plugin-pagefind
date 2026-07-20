@@ -10,8 +10,7 @@ offline-capable full-text search solution, using the DocSearch UI shell.
 
 🔗 [Live Demo](https://toasty-kj.github.io/docusaurus-plugin-pagefind/)
 
-<!-- TODO(toasty-kj): replace with a real GIF of the search modal in action -->
-![demo placeholder](./docs/demo-placeholder.png)
+![demo](./apps/wiki/static/img/demo.gif)
 
 ## Features
 

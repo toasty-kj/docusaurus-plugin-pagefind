@@ -10,6 +10,8 @@ sidebar_position: 1
 A Docusaurus plugin that integrates [Pagefind](https://pagefind.app/) as a fast,
 offline-capable full-text search solution, using the DocSearch UI shell.
 
+![demo](/img/demo.gif)
+
 ## Features
 
 - Full-text search via Pagefind (runs at build time, no server required)
