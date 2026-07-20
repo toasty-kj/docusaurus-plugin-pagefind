@@ -1,0 +1,61 @@
+name: Bug Report
+description: Report a problem with docusaurus-plugin-pagefind
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report! Please fill in as much detail as you can.
+  - type: input
+    id: plugin-version
+    attributes:
+      label: docusaurus-plugin-pagefind version
+      placeholder: "0.1.1"
+    validations:
+      required: true
+  - type: input
+    id: docusaurus-version
+    attributes:
+      label: Docusaurus version
+      placeholder: "3.10.0"
+    validations:
+      required: true
+  - type: input
+    id: pagefind-version
+    attributes:
+      label: pagefind version
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Minimal steps to reproduce the issue
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or config
+      description: Paste any relevant `docusaurus.config.ts` plugin options, error messages, or console output
+      render: shell
+    validations:
+      required: false

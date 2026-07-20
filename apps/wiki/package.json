@@ -2,7 +2,10 @@
 	"name": "wiki",
 	"private": true,
 	"scripts": {
+		"sync:changelog": "node scripts/sync-changelog.mjs",
+		"prestart": "node scripts/sync-changelog.mjs",
 		"start": "docusaurus start",
+		"prebuild": "node scripts/sync-changelog.mjs",
 		"build": "docusaurus build",
 		"serve": "docusaurus serve"
 	},

@@ -1,10 +1,10 @@
-import type { Config } from '@docusaurus/types';
+import type { Config } from '@docusaurus/types'
 
 const config: Config = {
 	title: 'docusaurus-plugin-pagefind',
 	tagline: 'Fast offline search for Docusaurus powered by Pagefind',
 	url: 'https://toasty-kj.github.io',
-	baseUrl: '/',
+	baseUrl: '/docusaurus-plugin-pagefind/',
 	onBrokenLinks: 'throw',
 	markdown: { hooks: { onBrokenMarkdownLinks: 'warn' } },
 	i18n: { defaultLocale: 'en', locales: ['en'] },
@@ -15,32 +15,33 @@ const config: Config = {
 			{
 				docs: { sidebarPath: './sidebars.ts', routeBasePath: '/' },
 				blog: false,
-				theme: {},
-			},
-		],
+				theme: {}
+			}
+		]
 	],
 
 	plugins: [
 		[
 			'docusaurus-plugin-pagefind',
 			{
-				excludeSelectors: ['.navbar', 'footer'],
-			},
-		],
+				excludeSelectors: ['.navbar', 'footer']
+			}
+		]
 	],
 
 	themeConfig: {
 		navbar: {
 			title: 'docusaurus-plugin-pagefind',
 			items: [
+				{ to: '/changelog', label: 'Changelog', position: 'right' },
 				{
 					href: 'https://github.com/toasty-kj/docusaurus-plugin-pagefind',
 					label: 'GitHub',
-					position: 'right',
-				},
-			],
-		},
-	},
-};
+					position: 'right'
+				}
+			]
+		}
+	}
+}
 
-export default config;
+export default config
