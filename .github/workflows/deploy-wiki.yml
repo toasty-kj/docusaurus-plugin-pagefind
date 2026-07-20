@@ -1,0 +1,52 @@
+name: Deploy wiki
+
+# Builds the demo/docs site and publishes it to GitHub Pages.
+#
+# Two entry points:
+#   - workflow_call: invoked by release.yml after a successful npm publish,
+#     so the wiki ships as part of every release (the normal path).
+#   - workflow_dispatch: manual trigger for out-of-band deploys (docs-only
+#     fixes that shouldn't wait for a release).
+on:
+  workflow_call:
+  workflow_dispatch:
+
+# Serialize deployments; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build wiki demo
+        run: pnpm build:wiki
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/wiki/build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
