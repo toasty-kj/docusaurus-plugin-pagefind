@@ -7,3 +7,8 @@ build/
 docs/superpowers/
 packages/docusaurus-plugin-pagefind/README.md
 packages/docusaurus-plugin-pagefind/LICENSE
+apps/wiki/src/pages/changelog.md
+.worktrees/
+e2e/.builds/
+playwright-report/
+test-results/

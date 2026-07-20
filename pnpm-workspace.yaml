@@ -1,6 +1,7 @@
 packages:
   - "packages/*"
   - "apps/*"
+  - "e2e/fixtures/*"
 
 allowBuilds:
   esbuild: true
