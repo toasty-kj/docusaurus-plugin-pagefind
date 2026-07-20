@@ -1,18 +1,17 @@
 name: Deploy wiki
 
-# Wiki/docs deployment is decoupled from npm releases. The github-pages
-# environment only permits deployments from `develop`, so this runs there
-# on any change that affects the demo site (or the plugin it showcases),
-# independent of version bumps.
+# Builds the demo/docs site and publishes it to GitHub Pages.
+#
+# Two entry points:
+#   - workflow_call: invoked by release.yml after a successful npm publish,
+#     so the wiki ships as part of every release (the normal path).
+#   - workflow_dispatch: manual trigger for out-of-band deploys (docs-only
+#     fixes that shouldn't wait for a release).
 on:
-  push:
-    branches: [develop]
-    paths:
-      - 'apps/wiki/**'
-      - 'packages/docusaurus-plugin-pagefind/**'
-      - '.github/workflows/deploy-wiki.yml'
+  workflow_call:
+  workflow_dispatch:
 
-# Allow one concurrent deployment; let an in-progress run finish.
+# Serialize deployments; let an in-progress run finish.
 concurrency:
   group: pages
   cancel-in-progress: false

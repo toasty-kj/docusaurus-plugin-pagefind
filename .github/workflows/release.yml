@@ -11,6 +11,8 @@ jobs:
       contents: write
       pull-requests: write
       id-token: write
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
     steps:
       - uses: actions/checkout@v7
 
@@ -44,3 +46,12 @@ jobs:
           publish: pnpm run ci:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Ship the demo/docs site as part of every release that actually published.
+  deploy-wiki:
+    needs: release
+    if: needs.release.outputs.published == 'true'
+    permissions:
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy-wiki.yml
