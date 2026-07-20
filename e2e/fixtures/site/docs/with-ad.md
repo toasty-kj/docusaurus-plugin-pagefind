@@ -1,6 +1,6 @@
 # Page With Ad
 
-Ordinary body text that should stay indexed.
+Ordinary body text containing zzbodytoken that should stay indexed.
 
 <div className="ad-region">Sponsored block containing zzadtoken.</div>
 

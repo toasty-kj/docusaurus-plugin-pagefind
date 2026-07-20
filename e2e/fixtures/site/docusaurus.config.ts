@@ -19,7 +19,22 @@ const config: Config = {
 			}
 		]
 	],
-	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]]
+	plugins: [['docusaurus-plugin-pagefind', variant.pluginOptions]],
+	themeConfig: {
+		announcementBar: {
+			id: 'chrome-probe',
+			content: 'Announcement containing zzchrometoken',
+			isCloseable: false
+		},
+		navbar: {
+			title: 'Fixture zznavtoken',
+			items: []
+		},
+		footer: {
+			style: 'dark',
+			copyright: 'Footer containing zzfootertoken'
+		}
+	}
 }
 
 export default config

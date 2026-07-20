@@ -1,4 +1,6 @@
+import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import fg from 'fast-glob'
 // Type-only imports are erased at compile time, so referencing the ESM-only
 // `pagefind` package here is safe even though this module is emitted as CJS.
 // The package itself is a devDependency purely for these declarations; at
@@ -13,7 +15,7 @@ import type { PluginOptions } from './options'
  */
 export type PagefindIndex = Pick<
 	import('pagefind').PagefindIndex,
-	'addDirectory' | 'writeFiles'
+	'addHTMLFile' | 'writeFiles'
 >
 
 export type PagefindNodeApi = Pick<
@@ -55,6 +57,23 @@ function loadPagefind(): Promise<PagefindNodeApi> {
 	return import('pagefind')
 }
 
+/**
+ * Lists HTML files under `outDir`, relative to it, excluding anything
+ * matching `excludeGlobs`. Matched the same way `injectIgnoreMarkers` used to
+ * (globs evaluated with `cwd: outDir`), so `internal/**` still matches
+ * `internal/secret/index.html`.
+ */
+function collectHtmlFiles(
+	outDir: string,
+	excludeGlobs: string[] = []
+): Promise<string[]> {
+	return fg('**/*.html', {
+		cwd: outDir,
+		onlyFiles: true,
+		ignore: excludeGlobs
+	})
+}
+
 export async function runPagefind(
 	outDir: string,
 	options: PluginOptions,
@@ -69,7 +88,18 @@ export async function runPagefind(
 		throw new Error('Pagefind did not return an index')
 	}
 	try {
-		const { errors: addErrors } = await index.addDirectory({ path: outDir })
+		// Excluded files are never handed to Pagefind, rather than indexed and
+		// marked for it to skip: rootSelector narrows the scanned subtree, and a
+		// data-pagefind-ignore marker on <body> falls outside that subtree and
+		// is silently missed. Filtering here is correct regardless of what
+		// scanning options are in play.
+		const files = await collectHtmlFiles(outDir, options.excludeGlobs)
+		const addErrors: string[] = []
+		for (const sourcePath of files) {
+			const content = await fs.readFile(path.join(outDir, sourcePath), 'utf8')
+			const { errors } = await index.addHTMLFile({ sourcePath, content })
+			addErrors.push(...errors)
+		}
 		assertNoErrors('indexing', addErrors)
 		const { errors: writeErrors } = await index.writeFiles({
 			outputPath: path.join(outDir, 'pagefind')
