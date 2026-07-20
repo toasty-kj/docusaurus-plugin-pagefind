@@ -10,6 +10,7 @@
 		"test:e2e": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts",
 		"test:e2e:ui": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts --ui",
 		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
+		"ci:publish": "pnpm --filter docusaurus-plugin-pagefind publish --no-git-checks && changeset tag",
 		"prepare": "husky"
 	},
 	"engines": {
