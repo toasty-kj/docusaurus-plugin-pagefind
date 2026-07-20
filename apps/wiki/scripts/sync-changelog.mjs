@@ -14,4 +14,7 @@ const source = join(
 const dest = join(wikiDir, 'src', 'pages', 'changelog.md')
 
 mkdirSync(dirname(dest), { recursive: true })
-writeFileSync(dest, readFileSync(source, 'utf8').replace(/^#[^\n]*/, '# Changelog'))
+writeFileSync(
+	dest,
+	readFileSync(source, 'utf8').replace(/^#[^\n]*/, '# Changelog')
+)
