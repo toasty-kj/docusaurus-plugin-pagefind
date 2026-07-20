@@ -51,7 +51,38 @@ jobs:
   deploy-wiki:
     needs: release
     if: needs.release.outputs.published == 'true'
+    runs-on: ubuntu-latest
     permissions:
       pages: write
       id-token: write
-    uses: ./.github/workflows/deploy-wiki.yml
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build plugin
+        run: pnpm build
+
+      - name: Build wiki demo
+        run: pnpm build:wiki
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/wiki/build
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
