@@ -1,15 +1,10 @@
 name: Deploy wiki
 
 # Builds the demo/docs site and publishes it to GitHub Pages.
-#
-# Two entry points:
-#   - workflow_call: invoked by release.yml after a successful npm publish,
-#     so the wiki ships as part of every release (the normal path).
-#   - workflow_dispatch: manual trigger for out-of-band deploys (docs-only
-#     fixes that shouldn't wait for a release).
+# Invoked by release.yml after a successful npm publish, so the wiki
+# ships as part of every release.
 on:
   workflow_call:
-  workflow_dispatch:
 
 # Serialize deployments; let an in-progress run finish.
 concurrency:
