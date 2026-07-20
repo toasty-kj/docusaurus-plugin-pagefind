@@ -1,5 +1,14 @@
 # docusaurus-plugin-pagefind
 
+## 0.2.1
+
+### Patch Changes
+
+- 1b42030: No functional package changes. Bumping to exercise the release pipeline
+  fix (running `changeset tag` after publish so `changesets/action` can
+  detect a successful publish) and unblock the wiki demo deploy, which has
+  been silently skipped since the last two releases.
+
 ## 0.2.0
 
 ### Minor Changes
