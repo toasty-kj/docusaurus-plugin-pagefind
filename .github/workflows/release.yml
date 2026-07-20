@@ -37,11 +37,18 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm --filter docusaurus-plugin-pagefind publish --no-git-checks && pnpm changeset tag
+          # Must be a single command that runs through a shell: changesets/action
+          # splits this string on whitespace and runs it WITHOUT a shell, so `&&`
+          # chaining only works when delegated to a package.json script. The
+          # script publishes to npm (OIDC) then runs `changeset tag`, whose
+          # "New tag:" stdout is how the action detects a publish happened
+          # (drives the `published` output, git tags, and GitHub Releases).
+          publish: pnpm run ci:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  deploy-pages:
+  # Ship the demo/docs site as part of every release that actually published.
+  deploy-wiki:
     needs: release
     if: needs.release.outputs.published == 'true'
     runs-on: ubuntu-latest
@@ -63,6 +70,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Build plugin
+        run: pnpm build
 
       - name: Build wiki demo
         run: pnpm build:wiki
