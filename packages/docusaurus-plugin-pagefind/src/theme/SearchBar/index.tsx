@@ -32,7 +32,7 @@ async function importDocSearchModal() {
 // Inline copies of mdi:hashtag and mdi:file-document-outline (24x24 viewBox)
 // so the search bar doesn't pull in @iconify/react for two static icons.
 const HASHTAG_PATH =
-	'm5.41 21l.71-4h-4l.35-2h4l1.06-6h-4l.35-2h4l.71-4h2l-.71 4h6l.71-4h2l-.71 4h4l-.35 2h-4l-1.06 6h4l-.35 2h-4l-.71 4h-2l.71-4h-6l-.71 4z'
+	'm5.41 21l.71-4h-4l.35-2h4l1.06-6h-4l.35-2h4l.71-4h2l-.71 4h6l.71-4h2l-.71 4h4l-.35 2h-4l-1.06 6h4l-.35 2h-4l-.71 4h-2l.71-4h-6l-.71 4zm4.12-12l-1.06 6h6l1.06-6z'
 const FILE_DOCUMENT_OUTLINE_PATH =
 	'M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm0 2h7v5h5v11H6zm2 8v2h8v-2zm0 4v2h5v-2z'
 
