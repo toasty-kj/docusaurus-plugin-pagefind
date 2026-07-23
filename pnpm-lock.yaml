@@ -35,6 +35,12 @@ importers:
 
   apps/wiki:
     dependencies:
+      '@docsearch/css':
+        specifier: ^3.0.0
+        version: 3.9.0
+      '@docsearch/react':
+        specifier: ^3.0.0
+        version: 3.9.0(@algolia/client-search@5.55.2)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(search-insights@2.17.3)
       '@docusaurus/core':
         specifier: ^3.10.0
         version: 3.10.2(@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7))(postcss@8.5.16)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3)
@@ -91,12 +97,6 @@ importers:
 
   packages/docusaurus-plugin-pagefind:
     dependencies:
-      '@docsearch/css':
-        specifier: ^3.0.0
-        version: 3.9.0
-      '@docsearch/react':
-        specifier: ^3.0.0
-        version: 3.9.0(@algolia/client-search@5.55.2)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(search-insights@2.17.3)
       '@docusaurus/core':
         specifier: '>=3.0.0'
         version: 3.10.2(@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3)
@@ -110,6 +110,12 @@ importers:
         specifier: '>=18.0.0'
         version: 19.2.7(react@19.2.7)
     devDependencies:
+      '@docsearch/css':
+        specifier: ^3.0.0
+        version: 3.9.0
+      '@docsearch/react':
+        specifier: ^3.0.0
+        version: 3.9.0(@algolia/client-search@5.55.2)(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(search-insights@2.17.3)
       '@docusaurus/module-type-aliases':
         specifier: ^3.10.0
         version: 3.10.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)

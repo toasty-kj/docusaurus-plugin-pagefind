@@ -33,17 +33,19 @@
 		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"@docsearch/css": "^3.0.0",
-		"@docsearch/react": "^3.0.0",
 		"fast-glob": "^3.3.0"
 	},
 	"peerDependencies": {
+		"@docsearch/css": ">=3.0.0",
+		"@docsearch/react": ">=3.0.0",
 		"@docusaurus/core": ">=3.0.0",
 		"pagefind": ">=1.1.0",
 		"react": ">=18.0.0",
 		"react-dom": ">=18.0.0"
 	},
 	"devDependencies": {
+		"@docsearch/css": "^3.0.0",
+		"@docsearch/react": "^3.0.0",
 		"@docusaurus/module-type-aliases": "^3.10.0",
 		"@docusaurus/types": "^3.10.0",
 		"@docusaurus/tsconfig": "^3.10.0",
