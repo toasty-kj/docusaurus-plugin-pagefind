@@ -100,6 +100,9 @@ importers:
       '@docusaurus/core':
         specifier: '>=3.0.0'
         version: 3.10.2(@mdx-js/react@3.1.1(@types/react@19.2.17)(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3)
+      '@iconify/react':
+        specifier: ^4.0.0
+        version: 4.1.1(react@19.2.7)
       fast-glob:
         specifier: ^3.3.0
         version: 3.3.3
@@ -1578,6 +1581,14 @@ packages:
 
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
+
+  '@iconify/react@4.1.1':
+    resolution: {integrity: sha512-jed14EjvKjee8mc0eoscGxlg7mSQRkwQG3iX3cPBCO7UlOjz0DtlvTqxqEcHUJGh+z1VJ31Yhu5B9PxfO0zbdg==}
+    peerDependencies:
+      react: '>=16'
+
+  '@iconify/types@2.0.0':
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   '@inquirer/external-editor@1.0.3':
     resolution: {integrity: sha512-RWbSrDiYmO4LbejWY7ttpxczuwQyZLBUyygsA9Nsv95hpzUWwnNTVQmAq3xuh7vNwCp07UTmE5i11XAEExx4RA==}
@@ -9451,6 +9462,13 @@ snapshots:
   '@hapi/topo@5.1.0':
     dependencies:
       '@hapi/hoek': 9.3.0
+
+  '@iconify/react@4.1.1(react@19.2.7)':
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 19.2.7
+
+  '@iconify/types@2.0.0': {}
 
   '@inquirer/external-editor@1.0.3(@types/node@22.20.1)':
     dependencies:
