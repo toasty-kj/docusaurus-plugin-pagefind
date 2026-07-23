@@ -65,6 +65,15 @@ export default {
 pnpm docusaurus swizzle docusaurus-plugin-pagefind SearchBar
 ```
 
+The `SearchBar` component depends on `@docsearch/react` and `@docsearch/css`.
+These are declared as peer dependencies, so if you eject the component install
+them in your site (package managers that auto-install peer dependencies do this
+for you):
+
+```bash
+pnpm add @docsearch/react @docsearch/css
+```
+
 ## Community
 
 - [Contributing Guide](./CONTRIBUTING.md)
