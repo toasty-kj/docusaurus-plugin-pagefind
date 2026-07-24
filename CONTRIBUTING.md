@@ -28,6 +28,13 @@ This repo follows a trunk-based model with [Changesets](https://github.com/chang
 3. Run `pnpm changeset` and commit the generated file alongside your changes
 4. Open a pull request against `main` — CI must pass before merging
 
+> **Changesets are enforced in CI.** The `Changeset Check` workflow fails any PR
+> that modifies the published `docusaurus-plugin-pagefind` package without a
+> changeset. For a change that touches the package but intentionally needs no
+> release (test-only changes, internal refactors), record that explicitly with
+> `pnpm changeset --empty`. Docs/CI-only changes and the unpublished `wiki` /
+> `@fixtures/site` workspaces never require one.
+
 ## Running Tests
 
 ```bash

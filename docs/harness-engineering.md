@@ -63,6 +63,10 @@ Already mechanical in this repo:
 - **Biome** with the recommended preset **plus `noExcessiveCognitiveComplexity:
   error`** — a hard ceiling on tangled code (`biome.json`).
 - **Husky + lint-staged** run `biome check --write` on every commit.
+- **Changeset presence** is a CI gate (`.github/workflows/changeset-check.yml`):
+  a PR that changes the published package without a changeset fails, so a release
+  can never silently ship undocumented — the omission surfaces at review time
+  instead of relying on the contributor to remember.
 - **Structural invariants in code, not prose**: e.g. `resolveOptions` makes
   `excludeSelectors` *additive* so the default chrome exclusions can never be
   silently dropped; `runPagefind` takes an injectable `load` so tests never touch
@@ -115,6 +119,7 @@ increments rather than in a painful quarterly cleanup:
 | Injectable seams for testability | ✅ in place |
 | Runnable demo instance (`apps/wiki`) | ✅ in place |
 | Automated release (Changesets) | ✅ in place |
+| Changeset presence enforced in CI | ✅ in place |
 | Vendored API references (`docs/references/*-llms.txt`) | ✅ in place |
 | Browser-level E2E coverage | 🚧 scaffold only — grow `e2e/tests/` |
 | CI-enforced doc freshness / link-check | ⬜ not yet |
