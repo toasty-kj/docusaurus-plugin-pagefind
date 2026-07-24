@@ -1,5 +1,11 @@
 # docusaurus-plugin-pagefind
 
+## 0.2.2
+
+### Patch Changes
+
+- d52bb1c: Remove the `@iconify/react` runtime dependency from the search bar theme. The two hit-type icons (hashtag / document) are now inline SVGs, avoiding a runtime fetch to the Iconify API for what were two fixed icons.
+
 ## 0.2.1
 
 ### Patch Changes
