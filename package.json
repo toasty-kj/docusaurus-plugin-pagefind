@@ -10,6 +10,7 @@
 		"test:e2e": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts",
 		"test:e2e:ui": "pnpm e2e:prepare && playwright test --config e2e/playwright.config.ts --ui",
 		"typecheck": "pnpm --filter docusaurus-plugin-pagefind exec tsc --noEmit",
+		"ci:publish": "pnpm --filter docusaurus-plugin-pagefind publish --no-git-checks && changeset tag",
 		"prepare": "husky"
 	},
 	"engines": {
@@ -18,11 +19,11 @@
 	"packageManager": "pnpm@11.13.0",
 	"devDependencies": {
 		"@biomejs/biome": "2.5.3",
-		"@changesets/cli": "^2.27.0",
+		"@changesets/cli": "^2.31.1",
 		"@docusaurus/tsconfig": "^3.10.0",
 		"@playwright/test": "^1.61.1",
 		"husky": "^9.1.7",
-		"lint-staged": "^17.0.8",
+		"lint-staged": "^17.1.1",
 		"playwright": "^1.61.1",
 		"typescript": "^5.0.0"
 	},

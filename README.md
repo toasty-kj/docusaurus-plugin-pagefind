@@ -65,6 +65,19 @@ export default {
 pnpm docusaurus swizzle docusaurus-plugin-pagefind SearchBar
 ```
 
+The `SearchBar` component depends on `@docsearch/react` and `@docsearch/css`,
+which ship as dependencies of this plugin — no extra install is needed for the
+default (non-swizzled) search bar.
+
+If you **eject** the component (`--eject`), the copied source lives in your
+site's `src/theme`. Most setups resolve the imports transparently, but strict
+installers that don't hoist (e.g. pnpm without `shamefully-hoist`) may not reach
+the plugin's copy from your site. In that case, install them directly:
+
+```bash
+pnpm add @docsearch/react @docsearch/css
+```
+
 ## Community
 
 - [Contributing Guide](./CONTRIBUTING.md)
