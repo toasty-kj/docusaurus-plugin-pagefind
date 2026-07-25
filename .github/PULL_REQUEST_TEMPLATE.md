@@ -8,6 +8,6 @@
 
 ## Checklist
 
-- [ ] I ran `pnpm changeset` and committed the generated changeset file (if this change affects the published package)
+- [ ] I ran `pnpm changeset` and committed the generated changeset file (if this change affects the published package; use `pnpm changeset --empty` for a package change that needs no release)
 - [ ] I added or updated tests covering this change
 - [ ] `pnpm test` passes locally

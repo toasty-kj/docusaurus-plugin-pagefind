@@ -1,0 +1,31 @@
+name: Changeset Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  changeset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # changeset status --since needs the base branch history to diff
+          # against, so fetch the full history rather than a shallow clone.
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Fails when a publishable package changed but no changeset was added.
+      # Docs/CI-only PRs pass without one; use `pnpm changeset --empty` to
+      # record an intentional no-release for a package-touching change.
+      - name: Verify a changeset is present
+        run: pnpm changeset status --since=origin/${{ github.base_ref }}
