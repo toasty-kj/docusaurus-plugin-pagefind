@@ -10,7 +10,7 @@
 		"@docusaurus/preset-classic": "^3.10.0",
 		"docusaurus-plugin-pagefind": "workspace:*",
 		"react": "^19.0.0",
-		"react-dom": "^19.0.0"
+		"react-dom": "^19.2.8"
 	},
 	"devDependencies": {
 		"@docusaurus/tsconfig": "^3.10.0",
