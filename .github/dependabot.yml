@@ -1,12 +1,45 @@
 version: 2
+
+# Cadence rationale: this repo publishes a library, so only the plugin's
+# `dependencies`/`peerDependencies` ranges reach consumers — the lockfile and
+# every devDependency are invisible downstream. Version updates are therefore
+# batched monthly rather than opened one PR per bump. Security updates are a
+# separate Dependabot feature that ignores both `schedule` and `cooldown`, so
+# vulnerabilities are still patched the day they are published.
 updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 10
+      interval: "monthly"
+    open-pull-requests-limit: 5
+
+    # Wait out the post-release churn (a 19.2.7 superseded by 19.2.8 days
+    # later) instead of opening a PR for each hop.
+    cooldown:
+      default-days: 7
+      semver-major-days: 30
+
+    # Minor/patch bumps are batched so coupled packages (playwright +
+    # @playwright/test, react + react-dom, @docsearch/css + @docsearch/react)
+    # move in one PR, one lockfile, one CI run, one changeset. Majors stay
+    # outside the groups on purpose: they need real work, not a rubber stamp.
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+        update-types: ["minor", "patch"]
+      production-dependencies:
+        dependency-type: "production"
+        update-types: ["minor", "patch"]
+
+    ignore:
+      # engines.node pins Node 22.x, so the types have to stay on that major.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
+    groups:
+      github-actions:
+        patterns: ["*"]
