@@ -25,7 +25,7 @@
 		"husky": "^9.1.7",
 		"lint-staged": "^17.2.0",
 		"playwright": "^1.62.0",
-		"typescript": "^5.0.0"
+		"typescript": "^6.0.3"
 	},
 	"lint-staged": {
 		"(*.ts|*.json)": "biome check --write"
