@@ -50,6 +50,6 @@
 		"@types/node": "^22.20.1",
 		"pagefind": "^1.5.2",
 		"typescript": "^5.9.3",
-		"vitest": "^3.2.6"
+		"vitest": "^4.1.10"
 	}
 }
