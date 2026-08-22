@@ -20,12 +20,12 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.5.5",
 		"@changesets/cli": "^2.31.1",
-		"@docusaurus/tsconfig": "^3.10.0",
+		"@docusaurus/tsconfig": "^3.10.2",
 		"@playwright/test": "^1.62.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^17.2.0",
 		"playwright": "^1.62.0",
-		"typescript": "^5.0.0"
+		"typescript": "^5.9.3"
 	},
 	"lint-staged": {
 		"(*.ts|*.json)": "biome check --write"
