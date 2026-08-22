@@ -33,7 +33,7 @@
 		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"@docsearch/css": "^3.9.0",
+		"@docsearch/css": "^4.6.3",
 		"@docsearch/react": "^3.9.0",
 		"fast-glob": "^3.3.3"
 	},
