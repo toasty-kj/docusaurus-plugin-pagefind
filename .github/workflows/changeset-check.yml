@@ -6,6 +6,9 @@ on:
 
 jobs:
   changeset:
+    # The Changesets bot's "Version Packages" PR consumes the changeset files
+    # while bumping package.json, so this guard would always fail on it.
+    if: github.head_ref != 'changeset-release/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
