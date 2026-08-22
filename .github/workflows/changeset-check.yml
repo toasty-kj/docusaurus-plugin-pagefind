@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   changeset:
     # The Changesets bot's "Version Packages" PR consumes the changeset files
@@ -31,4 +34,8 @@ jobs:
       # Docs/CI-only PRs pass without one; use `pnpm changeset --empty` to
       # record an intentional no-release for a package-touching change.
       - name: Verify a changeset is present
-        run: pnpm changeset status --since=origin/${{ github.base_ref }}
+        # BASE_REF goes through the environment rather than a `${{ }}` splice so
+        # the ref name is never expanded into the shell command itself.
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: pnpm changeset status --since="origin/$BASE_REF"
