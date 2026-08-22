@@ -33,9 +33,9 @@
 		"test:watch": "vitest"
 	},
 	"dependencies": {
-		"@docsearch/css": "^3.0.0",
-		"@docsearch/react": "^3.0.0",
-		"fast-glob": "^3.3.0"
+		"@docsearch/css": "^3.9.0",
+		"@docsearch/react": "^3.9.0",
+		"fast-glob": "^3.3.3"
 	},
 	"peerDependencies": {
 		"@docusaurus/core": ">=3.0.0",
@@ -44,12 +44,12 @@
 		"react-dom": ">=18.0.0"
 	},
 	"devDependencies": {
-		"@docusaurus/module-type-aliases": "^3.10.0",
-		"@docusaurus/types": "^3.10.0",
-		"@docusaurus/tsconfig": "^3.10.0",
-		"@types/node": "^22.0.0",
+		"@docusaurus/module-type-aliases": "^3.10.2",
+		"@docusaurus/tsconfig": "^3.10.2",
+		"@docusaurus/types": "^3.10.2",
+		"@types/node": "^22.20.1",
 		"pagefind": "^1.5.2",
-		"typescript": "^5.0.0",
+		"typescript": "^5.9.3",
 		"vitest": "^3.2.6"
 	}
 }
