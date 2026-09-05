@@ -35,7 +35,7 @@ jobs:
 
       - name: Create release PR or publish
         id: changesets
-        uses: changesets/action@v2
+        uses: changesets/action@v1
         with:
           # Must be a single command that runs through a shell: changesets/action
           # splits this string on whitespace and runs it WITHOUT a shell, so `&&`
