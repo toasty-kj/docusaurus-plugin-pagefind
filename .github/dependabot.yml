@@ -43,3 +43,8 @@ updates:
     groups:
       github-actions:
         patterns: ["*"]
+    ignore:
+      # changesets/action v2 requires Changesets CLI v3; this repo is still
+      # on @changesets/cli v2, so v2 of the action breaks the release job.
+      - dependency-name: "changesets/action"
+        update-types: ["version-update:semver-major"]
