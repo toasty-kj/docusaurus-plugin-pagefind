@@ -66,6 +66,34 @@ describe('expandPagefindResult', () => {
 		expect(hits[1].hierarchy.lvl2).toBe('Requirements')
 	})
 
+	it('shows the breadcrumb of the page for page and section hits', () => {
+		const result = {
+			...baseResult,
+			meta: { title: 'Introduction', breadcrumb: 'Guides › Basics' },
+			sub_results: [
+				{ title: 'Introduction', url: '/docs/intro', excerpt: 'About it' },
+				{ title: 'Config', url: '/docs/intro#config', excerpt: 'configure it' }
+			]
+		}
+		const hits = expandPagefindResult(result as any, '')
+		expect(hits[0].breadcrumbSegments).toEqual([
+			{ text: 'Guides › Basics', highlight: false }
+		])
+		expect(hits[1].breadcrumbSegments).toEqual([
+			{ text: 'Guides › Basics › Introduction', highlight: false }
+		])
+	})
+
+	it('shows the breadcrumb of a page without sub_results', () => {
+		const result = {
+			...baseResult,
+			meta: { title: 'Introduction', breadcrumb: 'Guides' }
+		}
+		expect(
+			expandPagefindResult(result as any, '')[0].breadcrumbSegments
+		).toEqual([{ text: 'Guides', highlight: false }])
+	})
+
 	it('highlights matching terms in titleSegments', () => {
 		const hits = expandPagefindResult(baseResult as any, 'Intro')
 		expect(hits[0].titleSegments).toEqual([
