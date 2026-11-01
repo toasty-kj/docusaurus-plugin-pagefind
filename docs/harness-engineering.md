@@ -84,9 +84,9 @@ An agent fixes what it can observe. Lower the cost of observation:
 
 - The **`apps/wiki` demo site** is a runnable instance an agent can build and
   serve (`pnpm dev:wiki`) to reproduce and verify search behavior end to end.
-- The **`e2e/` Playwright harness** auto-starts the wiki and drives a real
-  browser — the place to make UI/search regressions observable (currently a
-  scaffold; growing it is the highest-leverage legibility investment here).
+- The **`e2e/` Playwright suite** builds a fixture site per option variant and
+  drives a real browser against each — the place to make UI/search regressions
+  observable (see `e2e/README.md`).
 - Unit tests live beside source (`src/**/*.spec.ts`, Vitest) so behavior is
   checkable in seconds.
 
@@ -121,7 +121,7 @@ increments rather than in a painful quarterly cleanup:
 | Automated release (Changesets) | ✅ in place |
 | Changeset presence enforced in CI | ✅ in place |
 | Vendored API references (`docs/references/*-llms.txt`) | ✅ in place |
-| Browser-level E2E coverage | 🚧 scaffold only — grow `e2e/tests/` |
+| Browser-level E2E coverage | ✅ in place |
 | CI-enforced doc freshness / link-check | ⬜ not yet |
 
 ## Source
