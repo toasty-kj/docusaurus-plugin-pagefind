@@ -24,7 +24,7 @@ offline-capable full-text search solution, using the DocSearch UI shell.
 ## Requirements
 
 - Docusaurus ≥ 3.0
-- Node.js 22.x
+- Node.js ≥ 20
 - `pagefind` ≥ 1.0
 
 ## Installation
