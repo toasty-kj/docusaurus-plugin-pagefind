@@ -11,8 +11,10 @@ packages/docusaurus-plugin-pagefind/   # Publishable npm package
   src/
     index.ts                           # Plugin entry point (Docusaurus lifecycle methods)
     options.ts                         # PluginOptions interface + resolveOptions (additive excludeSelectors)
-    runPagefind.ts                     # Runs the Pagefind Node API (createIndex/addDirectory/writeFiles)
-    injectIgnoreMarkers.ts             # Adds data-pagefind-ignore to excluded HTML pages
+    pagefindWorker.mts                 # Child-process entry point for indexing (plain Node, real ESM)
+    runPagefind.ts                     # Runs the Pagefind Node API (createIndex/addHTMLFile per file/writeFiles)
+    breadcrumbMeta.ts                  # Injects data-pagefind-meta="breadcrumb:…" from the Docusaurus breadcrumbs
+    pagefindUrl.ts                     # Builds the baseUrl-aware pagefind.js URL
     theme/SearchBar/
       index.tsx                        # SearchBar React component (swizzleable)
       PagefindClient.ts                # Wraps Pagefind API in Algolia-compatible shape
@@ -21,7 +23,7 @@ packages/docusaurus-plugin-pagefind/   # Publishable npm package
   dist/                                # tsc output — gitignored, included in npm package
 
 apps/wiki/                             # Demo and documentation Docusaurus site
-e2e/                                   # Playwright E2E tests (scaffold only)
+e2e/                                   # Playwright E2E suite: variant matrix + spec tiers (see e2e/README.md)
 ```
 
 ## Architecture & Key Constraints

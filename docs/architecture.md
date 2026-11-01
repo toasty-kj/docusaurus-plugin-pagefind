@@ -14,11 +14,14 @@ share a module.
 
 ### Build-time — the Docusaurus plugin (Node, CJS)
 
-`src/index.ts` is the plugin. Its `postBuild` hook:
+`src/index.ts` is the plugin. Its `postBuild` hook indexes the built site with
+Pagefind (`runPagefind.ts`):
 
-1. Optionally injects `data-pagefind-ignore` markers into excluded HTML pages
-   (`injectIgnoreMarkers.ts`).
-2. Indexes the built site with Pagefind.
+1. Collects the built HTML files, dropping any that match `excludeGlobs`.
+2. Rewrites each file's HTML to inject `data-pagefind-meta="breadcrumb:…"` from
+   the Docusaurus breadcrumbs (`breadcrumbMeta.ts`; skipped when
+   `breadcrumbs: false`).
+3. Hands each file to Pagefind with `addHTMLFile`, then writes the index.
 
 The catch: Pagefind's Node API is **ESM-only**, and Docusaurus loads plugins
 through jiti's CJS sandbox, where `import('pagefind')` fails (both plain dynamic
@@ -31,7 +34,7 @@ process, native `import()` just works.
 index.ts (CJS, under jiti)
   └─ postBuild → execFile(process.execPath, ["pagefindWorker.mjs", JSON])
        └─ pagefindWorker.mts (real ESM via .mts + module:nodenext)
-            └─ runPagefind.ts → import('pagefind') → createIndex → addDirectory → writeFiles
+            └─ runPagefind.ts → import('pagefind') → createIndex → addHTMLFile (per file) → writeFiles
 ```
 
 `runPagefind` takes an injectable `load` parameter so unit tests supply a fake
@@ -48,8 +51,9 @@ for this reason.
   so the DocSearch UI consumes it unmodified.
 - `transformHits.ts` — maps Pagefind results to DocSearch hit objects.
 
-The client loads `/pagefind/pagefind.js` — a runtime asset generated at build
-time, not a bundleable module (see webpack externals below).
+The client loads `<baseUrl>/pagefind/pagefind.js` (URL built by `pagefindUrl.ts`
+in `index.ts`) — a runtime asset generated at build time, not a bundleable module
+(see webpack externals below).
 
 ## Key constraints
 
@@ -69,7 +73,7 @@ time, not a bundleable module (see webpack externals below).
 
 ### No `@docusaurus/utils`
 
-- `injectIgnoreMarkers.ts` uses `fast-glob` instead of `Globby` from `@docusaurus/utils`.
+- `runPagefind.ts` uses `fast-glob` instead of `Globby` from `@docusaurus/utils`.
 - `@docusaurus/utils` is an internal Docusaurus package; its API changes without notice.
 
 ### `configureWebpack` future change
@@ -83,6 +87,11 @@ time, not a bundleable module (see webpack externals below).
 - **`excludeSelectors` is additive** (`options.ts` → `resolveOptions`): the curated
   `DEFAULT_EXCLUDE_SELECTORS` (Docusaurus chrome) are always kept and user selectors are
   unioned on top, so a custom list never silently drops the chrome exclusions.
+- **`excludeGlobs` filters files; it does not mark them** (`runPagefind.ts`): excluded
+  files are never passed to `addHTMLFile`. Marking them with
+  `data-pagefind-ignore="all"` on `<body>` does not work, because `rootSelector`
+  (e.g. `main`) makes Pagefind scan only that subtree, so a marker on the ancestor
+  `<body>` is never seen and the page stays searchable (fixed in 0.2.0).
 
 ## Build detail
 

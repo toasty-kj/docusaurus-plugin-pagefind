@@ -1,6 +1,6 @@
 {
 	"name": "docusaurus-plugin-pagefind",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"description": "Pagefind search plugin for Docusaurus with DocSearch UI",
 	"keywords": [
 		"docusaurus",
@@ -50,6 +50,6 @@
 		"@types/node": "^22.20.4",
 		"pagefind": "^1.5.2",
 		"typescript": "^5.9.3",
-		"vitest": "^3.2.6"
+		"vitest": "^5.0.5"
 	}
 }

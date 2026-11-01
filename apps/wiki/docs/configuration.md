@@ -14,6 +14,7 @@ sidebar_position: 3
 | `excludeSelectors` | `string[]` | `.navbar, footer, ...` | Extra CSS selectors excluded from the index. Added on top of the built-in Docusaurus chrome exclusions, not a replacement |
 | `rootSelector` | `string` | — | Root element for indexing (default: full body) |
 | `excludeGlobs` | `string[]` | — | Glob patterns for pages to exclude from the index |
+| `breadcrumbs` | `boolean` | `true` | Show the Docusaurus breadcrumbs of a page with its search results (e.g. `Guides › Deployment`). A page can set its own with `data-pagefind-meta="breadcrumb:…"` |
 
 ## Example
 

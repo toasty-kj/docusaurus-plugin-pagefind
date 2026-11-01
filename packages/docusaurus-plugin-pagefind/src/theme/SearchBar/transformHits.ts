@@ -88,10 +88,19 @@ function createDocSearchHit(params: {
 	subTitle: string | null
 	excerpt: string
 	titleText: string
+	breadcrumb: string
 	query: string
 }): DocSearchHit {
-	const { objectID, url, pageTitle, subTitle, excerpt, titleText, query } =
-		params
+	const {
+		objectID,
+		url,
+		pageTitle,
+		subTitle,
+		excerpt,
+		titleText,
+		breadcrumb,
+		query
+	} = params
 	return {
 		objectID,
 		url,
@@ -103,7 +112,7 @@ function createDocSearchHit(params: {
 		},
 		content: excerpt,
 		titleSegments: splitHighlight(titleText, query),
-		breadcrumbSegments: subTitle ? splitHighlight(pageTitle, query) : [],
+		breadcrumbSegments: splitHighlight(breadcrumb, query),
 		contentSegments: splitHighlight(stripMarks(excerpt), query),
 		type: 'content',
 		_snippetResult: {
@@ -117,6 +126,11 @@ export function expandPagefindResult(
 	query: string
 ): DocSearchHit[] {
 	const pageTitle = result.meta.title
+	// the page's Docusaurus breadcrumbs (breadcrumbMeta.ts); sections are also under their page
+	const pageBreadcrumb = result.meta.breadcrumb ?? ''
+	const sectionBreadcrumb = [pageBreadcrumb, pageTitle]
+		.filter(Boolean)
+		.join(' › ')
 
 	if (result.sub_results.length > 0) {
 		return result.sub_results.map((sub) => {
@@ -129,6 +143,7 @@ export function expandPagefindResult(
 				subTitle: isPageTitleMatch ? null : sub.title,
 				excerpt,
 				titleText: sub.title,
+				breadcrumb: isPageTitleMatch ? pageBreadcrumb : sectionBreadcrumb,
 				query
 			})
 		})
@@ -142,6 +157,7 @@ export function expandPagefindResult(
 			subTitle: null,
 			excerpt: result.excerpt,
 			titleText: pageTitle,
+			breadcrumb: pageBreadcrumb,
 			query
 		})
 	]
