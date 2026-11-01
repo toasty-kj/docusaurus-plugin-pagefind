@@ -18,6 +18,7 @@ offline-capable full-text search solution, using the DocSearch UI shell.
 - DocSearch-style UI: keyboard shortcut (`Ctrl+K` / `Cmd+K`), modal, hit highlighting
 - Light and dark theme support out of the box
 - Exclude pages from the search index via CSS selectors or glob patterns
+- Each result shows the breadcrumbs of its page (e.g. `Guides › Deployment`), so results with the same title in different sections are easy to tell apart
 - TypeScript support and swizzleable `SearchBar` component
 
 ## Requirements
@@ -58,6 +59,7 @@ export default {
 | `excludeSelectors` | `string[]` | `.navbar, footer, ...` | Extra CSS selectors excluded from index (added on top of the built-in exclusions) |
 | `rootSelector` | `string` | — | Root element for indexing |
 | `excludeGlobs` | `string[]` | — | Pages to exclude (glob relative to outDir) |
+| `breadcrumbs` | `boolean` | `true` | Show the Docusaurus breadcrumbs of a page with its results. A page can set its own with `data-pagefind-meta="breadcrumb:…"` |
 
 ## Swizzling
 

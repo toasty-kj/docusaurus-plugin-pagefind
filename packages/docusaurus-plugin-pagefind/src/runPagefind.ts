@@ -6,6 +6,7 @@ import fg from 'fast-glob'
 // The package itself is a devDependency purely for these declarations; at
 // runtime the consumer's peer-installed copy is loaded via import() below.
 import type { PagefindServiceConfig } from 'pagefind'
+import { addBreadcrumbMeta } from './breadcrumbMeta'
 import type { PluginOptions } from './options'
 
 /**
@@ -96,7 +97,9 @@ export async function runPagefind(
 		const files = await collectHtmlFiles(outDir, options.excludeGlobs)
 		const addErrors: string[] = []
 		for (const sourcePath of files) {
-			const content = await fs.readFile(path.join(outDir, sourcePath), 'utf8')
+			const html = await fs.readFile(path.join(outDir, sourcePath), 'utf8')
+			const content =
+				options.breadcrumbs === false ? html : addBreadcrumbMeta(html)
 			const { errors } = await index.addHTMLFile({ sourcePath, content })
 			addErrors.push(...errors)
 		}

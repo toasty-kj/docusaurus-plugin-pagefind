@@ -121,6 +121,27 @@ describe('runPagefind', () => {
 		expect(addDirectorySpy).not.toHaveBeenCalled()
 	})
 
+	it('adds the breadcrumbs of a page as metadata, unless disabled', async () => {
+		const html =
+			'<html><body><article><nav class="theme-doc-breadcrumbs"><ul class=breadcrumbs>' +
+			'<li class=breadcrumbs__item><span>Guides</span>' +
+			'<li class="breadcrumbs__item breadcrumbs__item--active"><span>Docker</span></ul></nav></article></body></html>'
+		await fs.writeFile(path.join(outDir, 'guide', 'index.html'), html)
+		const contentOf = async (options: { breadcrumbs?: boolean }) => {
+			const { api, index } = createFakeApi()
+			await runPagefind(outDir, options, async () => api)
+			const calls = (index.addHTMLFile as ReturnType<typeof vi.fn>).mock.calls
+			return calls.find(
+				([file]) => file.sourcePath === path.join('guide', 'index.html')
+			)?.[0].content as string
+		}
+
+		expect(await contentOf({})).toContain(
+			'<span data-pagefind-meta="breadcrumb:Guides" hidden></span>'
+		)
+		expect(await contentOf({ breadcrumbs: false })).toBe(html)
+	})
+
 	it('passes sourcePath relative to outDir, not absolute', async () => {
 		const { api, index } = createFakeApi()
 		await runPagefind(outDir, {}, async () => api)

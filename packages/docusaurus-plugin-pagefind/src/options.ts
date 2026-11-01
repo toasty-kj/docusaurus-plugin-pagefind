@@ -3,6 +3,8 @@ export interface PluginOptions {
 	excludeSelectors?: string[]
 	rootSelector?: string
 	excludeGlobs?: string[]
+	/** Show the Docusaurus breadcrumbs of a page with its search results (default: true) */
+	breadcrumbs?: boolean
 }
 
 /**
