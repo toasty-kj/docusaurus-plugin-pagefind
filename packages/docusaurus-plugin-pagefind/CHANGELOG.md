@@ -1,5 +1,15 @@
 # docusaurus-plugin-pagefind
 
+## 0.3.0
+
+### Minor Changes
+
+- 300a817: Show the Docusaurus breadcrumbs of a page with its search results (e.g. `Guides › Deployment`), and `Guides › Deployment › Docker` for the sections of a page, so that results with the same title in different sections can be told apart. The breadcrumbs are read from each page at build time and indexed as Pagefind `breadcrumb` metadata; a page can set its own with `data-pagefind-meta="breadcrumb:…"`. Disable with the new `breadcrumbs: false` option.
+
+### Patch Changes
+
+- 21a9346: Update dependencies to pull in security fixes for transitive packages (brace-expansion, js-yaml, nanoid, postcss) and raise the declared floors to the versions actually installed: `@docsearch/css`/`@docsearch/react` ^3.9.0 and `fast-glob` ^3.3.3. The advisories affect build-time tooling only; the published runtime is unchanged.
+
 ## 0.2.2
 
 ### Patch Changes
