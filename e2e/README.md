@@ -43,7 +43,7 @@ Current variants:
 
 - `root-baseurl` — `baseUrl: '/'`, port 3100
 - `non-root-baseurl` — `baseUrl: '/fixture-base/'`, port 3101
-- `options-combined` — `baseUrl: '/'`, port 3102, all four plugin options set
+- `options-combined` — `baseUrl: '/'`, port 3102, all five plugin options set
 
 ## Why builds are serialized outside Playwright
 
@@ -83,7 +83,7 @@ assertion true?*
 token is present" assertion in `no-options/`, or it would pass just as well if
 the token had never been indexable.
 
-The suite runs 44 executions off three builds. Total executions are deliberately
+The suite runs 55 executions off three builds. Total executions are deliberately
 *not* minimised: the three serialized `docusaurus build` runs dominate the
 runtime and are fixed, while browser assertions are cheap and run in parallel —
 so `tests/shared/` runs on all three variants rather than being gated to one.

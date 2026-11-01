@@ -40,7 +40,8 @@ export const variants: Variant[] = [
 			excludeGlobs: ['internal/**'],
 			excludeSelectors: ['.ad-region'],
 			rootSelector: 'main',
-			forceLanguage: 'en'
+			forceLanguage: 'en',
+			breadcrumbs: false
 		},
 		tiers: ['shared', 'options']
 	}
