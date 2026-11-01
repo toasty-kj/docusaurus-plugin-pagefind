@@ -53,5 +53,5 @@ index.writeFiles(options) => Promise<{ errors: string[] }>
 ## Error-handling contract (as implemented in runPagefind.ts)
 
 Every call returns an `errors: string[]`. Treat a non-empty array as failure and
-throw with context. The current flow: createIndex -> addDirectory -> writeFiles,
+throw with context. The current flow: createIndex -> addHTMLFile (per file) -> writeFiles,
 then close() in `finally`.

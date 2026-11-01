@@ -11,7 +11,7 @@ if something looks stale.
 
 | File | Covers | Used by |
 |---|---|---|
-| [`pagefind-node-api-llms.txt`](./pagefind-node-api-llms.txt) | Pagefind Node indexing API (`createIndex`, `addDirectory`, `writeFiles`, `close`) | `src/runPagefind.ts` |
+| [`pagefind-node-api-llms.txt`](./pagefind-node-api-llms.txt) | Pagefind Node indexing API (`createIndex`, `addHTMLFile`, `writeFiles`, `close`) | `src/runPagefind.ts` |
 | [`docusaurus-plugin-api-llms.txt`](./docusaurus-plugin-api-llms.txt) | Docusaurus plugin lifecycle (`postBuild`, `configureWebpack`, `getThemePath`, `getTypeScriptThemePath`) | `src/index.ts` |
 
 When the plugin starts calling a new part of either API, extend the relevant file
