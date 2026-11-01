@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { CONTROL_TOKEN, expectHits, hits } from '../helpers'
+import { CONTROL_TOKEN, expectHits, gotoHydrated, hits } from '../helpers'
 
 // The regression this suite was built for: under a non-root baseUrl the
 // runtime import resolved to the wrong path and was served as HTML, so the
@@ -11,7 +11,7 @@ test('pagefind.js is served as JavaScript from a baseUrl-aware path', async ({
 		response.url().endsWith('/pagefind/pagefind.js')
 	)
 
-	await page.goto('./')
+	await gotoHydrated(page)
 	await page.getByRole('button', { name: /search/i }).click()
 	await page.getByPlaceholder(/search/i).fill(CONTROL_TOKEN)
 

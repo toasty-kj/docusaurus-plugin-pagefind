@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test'
-import { openSearch, searchInput } from '../helpers'
+import { gotoHydrated, openSearch, searchInput } from '../helpers'
 
 test('clicking the search button opens the modal', async ({ page }) => {
-	await page.goto('./')
+	await gotoHydrated(page)
 	await expect(searchInput(page)).toHaveCount(0)
 
 	await page.getByRole('button', { name: /search/i }).click()
@@ -11,8 +11,7 @@ test('clicking the search button opens the modal', async ({ page }) => {
 })
 
 test('the keyboard shortcut opens the modal', async ({ page }) => {
-	await page.goto('./')
-	await page.getByRole('button', { name: /search/i }).waitFor()
+	await gotoHydrated(page)
 
 	await page.keyboard.press('ControlOrMeta+k')
 
@@ -22,9 +21,8 @@ test('the keyboard shortcut opens the modal', async ({ page }) => {
 test('typing a printable key opens the modal seeded with that key', async ({
 	page
 }) => {
-	await page.goto('./')
+	await gotoHydrated(page)
 	const searchButton = page.getByRole('button', { name: /search/i })
-	await searchButton.waitFor()
 
 	// DocSearch's global handler (useDocSearchKeyboardEvents) only seeds
 	// initialQuery when the search button itself holds focus — mirroring a

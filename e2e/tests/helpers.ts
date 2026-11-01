@@ -32,8 +32,22 @@ export function searchInput(page: Page): Locator {
 	return page.getByPlaceholder(/search/i)
 }
 
+/**
+ * Navigates and waits for React hydration. The search button is in the SSR
+ * HTML, so it is visible before its click handler and DocSearch's keydown
+ * listener are attached; interacting earlier is silently ignored. Docusaurus
+ * sets the attribute from a root effect, which runs after every child effect.
+ */
+export async function gotoHydrated(page: Page, url = './'): Promise<void> {
+	await page.goto(url)
+	await expect(page.locator('html')).toHaveAttribute(
+		'data-has-hydrated',
+		'true'
+	)
+}
+
 export async function openSearch(page: Page): Promise<void> {
-	await page.goto('./')
+	await gotoHydrated(page)
 	await page.getByRole('button', { name: /search/i }).click()
 	await expect(searchInput(page)).toBeVisible()
 }
