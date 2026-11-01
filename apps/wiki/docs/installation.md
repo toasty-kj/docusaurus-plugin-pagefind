@@ -9,7 +9,7 @@ sidebar_position: 2
 ## Requirements
 
 - Docusaurus >= 3.0
-- Node.js 22.x
+- Node.js >= 20
 - `pagefind` >= 1.0 (installed separately — you control the version)
 
 ## Install
