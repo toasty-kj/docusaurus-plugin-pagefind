@@ -410,6 +410,12 @@
 	background: transparent !important;
 	background-color: transparent !important;
 	color: var(--pagefind-mark) !important;
+	/* @docsearch/css forces the selected hit's mark color with
+	   `color: var(--docsearch-hit-active-color) !important`. Under CSS cascade
+	   layers (on by default in Docusaurus v4) a layered !important beats this
+	   unlayered one, so redefine the variable that rule reads on the mark
+	   itself: that wins whether or not layers are in use. */
+	--docsearch-hit-active-color: var(--pagefind-mark);
 	font-weight: 600 !important;
 	text-decoration: none !important;
 	padding: 0 !important;
