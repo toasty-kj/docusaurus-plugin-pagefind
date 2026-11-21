@@ -14,7 +14,6 @@ packages/docusaurus-plugin-pagefind/   # Publishable npm package
     pagefindWorker.mts                 # Child-process entry point for indexing (plain Node, real ESM)
     runPagefind.ts                     # Runs the Pagefind Node API (createIndex/addHTMLFile per file/writeFiles)
     breadcrumbMeta.ts                  # Injects data-pagefind-meta="breadcrumb:…" from the Docusaurus breadcrumbs
-    pagefindUrl.ts                     # Builds the baseUrl-aware pagefind.js URL
     theme/SearchBar/
       index.tsx                        # SearchBar React component (swizzleable)
       PagefindClient.ts                # Wraps Pagefind API in Algolia-compatible shape
@@ -29,7 +28,7 @@ e2e/                                   # Playwright E2E suite: variant matrix + 
 ## Architecture & Key Constraints
 
 The build-time/client-side split and the non-obvious invariants — theme path
-semantics, webpack externals, the ESM-only pagefind worker, `@docusaurus/utils`
+semantics, how pagefind.js is loaded, the ESM-only pagefind worker, `@docusaurus/utils`
 avoidance, and the two-tsconfig build — live in
 [`docs/architecture.md`](./docs/architecture.md). **Read it before changing the
 plugin entry point (`index.ts`), the indexing worker, or the theme.**

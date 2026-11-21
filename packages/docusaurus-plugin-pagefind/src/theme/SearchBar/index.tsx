@@ -5,6 +5,7 @@ import type {
 } from '@docsearch/react'
 import { DocSearchButton, useDocSearchKeyboardEvents } from '@docsearch/react'
 import { useHistory } from '@docusaurus/router'
+import useBaseUrl from '@docusaurus/useBaseUrl'
 import type React from 'react'
 import {
 	Fragment,
@@ -102,7 +103,11 @@ export default function SearchBar(): React.JSX.Element {
 		undefined
 	)
 
-	const pagefindSearch = useMemo(() => createPagefindSearch(), [])
+	const pagefindJsUrl = useBaseUrl('/pagefind/pagefind.js')
+	const pagefindSearch = useMemo(
+		() => createPagefindSearch(pagefindJsUrl),
+		[pagefindJsUrl]
+	)
 
 	const transformSearchClient = useCallback(
 		(client: DocSearchTransformClient): DocSearchTransformClient => ({
