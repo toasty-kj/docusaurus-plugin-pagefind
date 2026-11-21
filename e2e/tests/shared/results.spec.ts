@@ -18,6 +18,24 @@ test('the query term is highlighted in results', async ({ page }) => {
 	)
 })
 
+test('the selected hit keeps the mark color for the query term', async ({
+	page
+}) => {
+	await expectHits(page, CONTROL_TOKEN)
+
+	const mark = page.locator('.DocSearch-Hit[aria-selected="true"] mark').first()
+	await expect(mark).toBeVisible()
+	const { actual, expected } = await mark.evaluate((el) => {
+		const probe = document.createElement('span')
+		probe.style.color = 'var(--pagefind-mark)'
+		el.after(probe)
+		const expected = getComputedStyle(probe).color
+		probe.remove()
+		return { actual: getComputedStyle(el).color, expected }
+	})
+	expect(actual).toBe(expected)
+})
+
 test('clicking a section hit navigates to its anchor', async ({ page }) => {
 	await expectHits(page, 'zzsectiontoken')
 
