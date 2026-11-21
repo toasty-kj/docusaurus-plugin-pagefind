@@ -21,51 +21,32 @@ function createContext(outDir: string, baseUrl: string): any {
 	return { outDir, siteConfig: { baseUrl } }
 }
 
-/**
- * Invokes the plugin's externals matcher function directly with a given
- * import request, returning whatever it passed to its callback. The
- * matcher in index.ts calls its callback synchronously, so no Promise
- * wrapping is needed.
- */
-function matchExternal(
-	plugin: ReturnType<typeof pluginPagefind>,
-	request: string
-): string | undefined {
-	const config = plugin.configureWebpack?.(
-		undefined as any,
-		false,
+function configureWebpack(isServer: boolean): any {
+	const plugin = pluginPagefind(createContext('/tmp/out', '/'), {})
+	return plugin.configureWebpack?.(
+		{} as any,
+		isServer,
 		undefined as any,
 		undefined as any
 	)
-	const matcher = (config as any).externals[0]
-	let captured: string | undefined
-	matcher({ request }, (_err: unknown, result?: string) => {
-		captured = result
-	})
-	return captured
 }
 
 describe('pluginPagefind', () => {
-	it('substitutes the pagefind.js URL for a root baseUrl unchanged from today', () => {
-		const plugin = pluginPagefind(createContext('/tmp/out', '/'), {})
-		expect(matchExternal(plugin, '/pagefind/pagefind.js')).toBe(
-			'promise import("/pagefind/pagefind.js")'
-		)
+	it('adds nothing to the client bundler config', () => {
+		expect(configureWebpack(false)).toEqual({})
 	})
 
-	it('substitutes a baseUrl-prefixed pagefind.js URL for a non-root baseUrl', () => {
-		const plugin = pluginPagefind(
-			createContext('/tmp/out', '/docusaurus-plugin-pagefind/'),
-			{}
+	it('ignores only the expression-dependency warning from PagefindClient on the server', () => {
+		const [rule] = configureWebpack(true).ignoreWarnings
+		expect(rule.module.test('/x/dist/theme/SearchBar/PagefindClient.js')).toBe(
+			true
 		)
-		expect(matchExternal(plugin, '/pagefind/pagefind.js')).toBe(
-			'promise import("/docusaurus-plugin-pagefind/pagefind/pagefind.js")'
-		)
-	})
-
-	it('leaves unrelated requests alone (no callback substitution)', () => {
-		const plugin = pluginPagefind(createContext('/tmp/out', '/'), {})
-		expect(matchExternal(plugin, 'react')).toBeUndefined()
+		expect(rule.module.test('/x/dist/theme/SearchBar/index.js')).toBe(false)
+		expect(
+			rule.message.test(
+				'Critical dependency: the request of a dependency is an expression'
+			)
+		).toBe(true)
 	})
 
 	it('runs the pagefind worker during postBuild without warning', async () => {

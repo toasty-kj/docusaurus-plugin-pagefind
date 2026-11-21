@@ -26,7 +26,7 @@ describe('createPagefindSearch', () => {
 	})
 
 	it('accepts Algolia-shaped requests and returns Algolia-shaped responses', async () => {
-		const search = createPagefindSearch()
+		const search = createPagefindSearch('/pagefind/pagefind.js')
 		const response = await search({
 			requests: [{ indexName: 'x', query: 'foo' }]
 		} as any)
@@ -40,17 +40,25 @@ describe('createPagefindSearch', () => {
 	it('loads the pagefind module only once across multiple searches', async () => {
 		const loader = vi.fn(async () => mockPagefind)
 		;(globalThis as any).__pagefindLoader = loader
-		const search = createPagefindSearch()
+		const search = createPagefindSearch('/pagefind/pagefind.js')
 		await search({ requests: [{ indexName: 'x', query: 'a' }] } as any)
 		await search({ requests: [{ indexName: 'x', query: 'b' }] } as any)
 		expect(loader).toHaveBeenCalledTimes(1)
+	})
+
+	it('passes the given baseUrl-aware URL to the loader', async () => {
+		const loader = vi.fn(async () => mockPagefind)
+		;(globalThis as any).__pagefindLoader = loader
+		const search = createPagefindSearch('/base/pagefind/pagefind.js')
+		await search({ requests: [{ indexName: 'x', query: 'a' }] } as any)
+		expect(loader).toHaveBeenCalledWith('/base/pagefind/pagefind.js')
 	})
 
 	it('returns empty hits when the pagefind module fails to load', async () => {
 		;(globalThis as any).__pagefindLoader = async () => {
 			throw new Error('module not found')
 		}
-		const search = createPagefindSearch()
+		const search = createPagefindSearch('/pagefind/pagefind.js')
 		const response = await search({
 			requests: [{ indexName: 'x', query: 'x' }]
 		} as any)

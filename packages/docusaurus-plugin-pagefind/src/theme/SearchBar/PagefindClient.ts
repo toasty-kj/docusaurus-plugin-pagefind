@@ -32,19 +32,21 @@ interface AlgoliaSearchResponse {
 
 let pagefindPromise: Promise<PagefindModule | null> | null = null
 
-function defaultLoader(): Promise<PagefindModule> {
-	return import(
-		// @ts-expect-error: /pagefind/pagefind.js is a runtime-only path served by Docusaurus build output
-		'/pagefind/pagefind.js'
-	) as Promise<PagefindModule>
+function defaultLoader(pagefindJsUrl: string): Promise<PagefindModule> {
+	return import(/* webpackIgnore: true */ pagefindJsUrl)
 }
 
-async function loadPagefind(): Promise<PagefindModule | null> {
+async function loadPagefind(
+	pagefindJsUrl: string
+): Promise<PagefindModule | null> {
 	if (pagefindPromise) return pagefindPromise
 	const loader =
-		(globalThis as { __pagefindLoader?: () => Promise<PagefindModule> })
-			.__pagefindLoader ?? defaultLoader
-	pagefindPromise = loader().catch(() => null)
+		(
+			globalThis as {
+				__pagefindLoader?: (url: string) => Promise<PagefindModule>
+			}
+		).__pagefindLoader ?? defaultLoader
+	pagefindPromise = loader(pagefindJsUrl).catch(() => null)
 	return pagefindPromise
 }
 
@@ -69,14 +71,14 @@ function buildResponseItem(
 	}
 }
 
-export function createPagefindSearch() {
+export function createPagefindSearch(pagefindJsUrl: string) {
 	return async function search(
 		req: AlgoliaSearchRequest
 	): Promise<AlgoliaSearchResponse> {
 		const first = req.requests[0]
 		const query = first?.query ?? ''
 		const indexName = first?.indexName ?? 'pagefind'
-		const pf = await loadPagefind()
+		const pf = await loadPagefind(pagefindJsUrl)
 		if (!pf || !query) {
 			return { results: [buildResponseItem(query, indexName)] }
 		}
